@@ -1,0 +1,24 @@
+export declare const rbacMatrix: {
+    super_admin: string[];
+    executive_supervisor: string[];
+    supplier_agent: string[];
+    djibouti_release_agent: string[];
+    djibouti_clearing_agent: string[];
+    corridor_dispatch_agent: string[];
+    dry_port_yard_agent: string[];
+    finance_customs_control: string[];
+    customer_support_agent: string[];
+    customer_user: string[];
+    customer_agent: string[];
+    internal_driver: string[];
+    external_driver: string[];
+    executive: string[];
+    operations_manager: string[];
+    dispatcher: string[];
+    technical_manager: string[];
+    marketing_officer: string[];
+    finance_officer: string[];
+    hr_officer: string[];
+    driver: string[];
+    customer: string[];
+};

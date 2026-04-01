@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tikur Abay Form Kit</title>
+    <style>
+      :root {
+        --ink: #10253d;
+        --muted: #56687a;
+        --line: #c9d7e3;
+        --brand: #0f766e;
+        --brand-dark: #0b2840;
+        --brand-soft: #e7f4f3;
+        --accent: #155687;
+        --page: #ffffff;
+        --shell: #eef4f7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Aptos", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(15, 118, 110, 0.08), transparent 24%),
+          linear-gradient(180deg, #f7fafc, var(--shell));
+      }
+
+      .wrap {
+        width: min(1120px, calc(100% - 40px));
+        margin: 32px auto 56px;
+        display: grid;
+        gap: 24px;
+      }
+
+      .sheet {
+        background: var(--page);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 22px 50px rgba(16, 37, 61, 0.08);
+        overflow: hidden;
+      }
+
+      .sheet-header {
+        padding: 26px 30px 22px;
+        background:
+          radial-gradient(circle at right top, rgba(21, 86, 135, 0.14), transparent 26%),
+          linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(255, 255, 255, 0.94));
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brandline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .brand h1 {
+        margin: 0 0 4px;
+        font-size: 1.55rem;
+        letter-spacing: -0.03em;
+      }
+
+      .brand p,
+      .meta p,
+      .field label,
+      .hint,
+      .check-row span {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .meta {
+        text-align: right;
+        font-size: 0.9rem;
+      }
+
+      .titlebar {
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: end;
+        flex-wrap: wrap;
+      }
+
+      .titlebar h2 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand-dark);
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        font-size: 0.84rem;
+        font-weight: 700;
+      }
+
+      .sheet-body {
+        padding: 26px 30px 32px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .section {
+        display: grid;
+        gap: 12px;
+      }
+
+      .section h3 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .section-note {
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: #f8fbfd;
+        border: 1px solid var(--line);
+        font-size: 0.92rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.84rem;
+        font-weight: 700;
+      }
+
+      .line,
+      .box {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+      }
+
+      .line {
+        height: 42px;
+      }
+
+      .box {
+        min-height: 92px;
+      }
+
+      .box.tall {
+        min-height: 132px;
+      }
+
+      .check-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fbfdfe;
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 28px;
+      }
+
+      .tick {
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid #91a5b6;
+        border-radius: 4px;
+        flex: 0 0 auto;
+      }
+
+      .signature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .signature-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+        min-height: 188px;
+      }
+
+      .footer {
+        padding-top: 6px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+
+        .wrap {
+          width: 100%;
+          margin: 0;
+          gap: 0;
+        }
+
+        .sheet {
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+          page-break-after: always;
+          min-height: 297mm;
+        }
+
+        .sheet:last-child {
+          page-break-after: auto;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .grid.two,
+        .grid.three,
+        .check-grid,
+        .signature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .meta {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="sheet">
+        <header class="sheet-header">
+          <div class="brandline">
+            <div class="brand">
+              <h1>Tikur Abay Transport &amp; Logistics PLC</h1>
+              <p>Multimodal shipping, customs, inland transport, and cargo visibility</p>
+            </div>
+            <div class="meta">
+              <p>Document Family: Commercial Intake</p>
+              <p>Use: Customer-submitted request</p>
+            </div>
+          </div>
+          <div class="titlebar">
+            <div>
+              <h2>Logistics Service Quotation Request Form</h2>
+            </div>
+            <span class="pill">Production Template</span>
+          </div>
+        </header>
+        <div class="sheet-body">
+          <div class="section">
+            <h3>1. Customer Information</h3>
+            <div class="grid two">
+              <div class="field"><label>Company Name</label><div class="line"></div></div>
+              <div class="field"><label>Contact Person</label><div class="line"></div></div>
+              <div class="field"><label>Telephone</label><div class="line"></div></div>
+              <div class="field"><label>Email Address</label><div class="line"></div></div>
+              <div class="field"><label>TIN / VAT Number</label><div class="line"></div></div>
+              <div class="field"><label>Customer Request Number</label><div class="line"></div></div>
+            </div>
+            <div class="field"><label>Full Address</label><div class="box"></div></div>
+          </div>
+
+          <div class="section">
+            <h3>2. Shipment Details</h3>
+            <div class="grid three">
+              <div class="field"><label>Port of Loading</label><div class="line"></div></div>
+              <div class="field"><label>Port of Discharge</label><div class="line"></div></div>
+              <div class="field"><label>Final Destination</label><div class="line"></div></div>
+              <div class="field"><label>Expected Shipment Date</label><div class="line"></div></div>
+              <div class="field"><label>Expected Delivery Date</label><div class="line"></div></div>
+              <div class="field"><label>Preferred Transport Mode</label><div class="line"></div></div>
+            </div>
+            <div class="check-grid">
+              <div class="check-row"><span class="tick"></span><span>FCL 20ft</span></div>
+              <div class="check-row"><span class="tick"></span><span>FCL 40ft</span></div>
+              <div class="check-row"><span class="tick"></span><span>LCL</span></div>
+              <div class="check-row"><span class="tick"></span><span>Special Container</span></div>
+              <div class="check-row"><span class="tick"></span><span>Dangerous Cargo</span></div>
+              <div class="check-row"><span class="tick"></span><span>Machinery / Project Cargo</span></div>
+              <div class="check-row"><span class="tick"></span><span>Vehicle / RoRo</span></div>
+              <div class="check-row"><span class="tick"></span><span>Bulk Cargo</span></div>
+            </div>
+            <div class="grid three">
+              <div class="field"><label>HS Code</label><div class="line"></div></div>
+              <div class="field"><label>Total Gross Weight</label><div class="line"></div></div>
+              <div class="field"><label>Total Volume (CBM)</label><div class="line"></div></div>
+            </div>
+            <div class="field"><label>Goods Description</label><div class="box"></div></div>
+            <div class="field"><label>Packaging / Dimensions</label><div class="box"></div></div>
+          </div>
+
+          <div class="section">
+            <h3>3. Additional Services Required</h3>
+            <div class="check-grid">
+              <div class="check-row"><span class="tick"></span><span>Customs Clearing</span></div>
+              <div class="check-row"><span class="tick"></span><span>Inland Transport</span></div>
+              <div class="check-row"><span class="tick"></span><span>Warehouse Service</span></div>
+              <div class="check-row"><span class="tick"></span><span>Door-to-Door Delivery</span></div>
+              <div class="check-row"><span class="tick"></span><span>Insurance Support</span></div>
+              <div class="check-row"><span class="tick"></span><span>Other</span></div>
+            </div>
+            <div class="field"><label>Special Remarks / Routing Instructions</label><div class="box tall"></div></div>
+          </div>
+
+          <div class="signature-grid">
+            <div class="signature-card">
+              <h3>Customer Authorization</h3>
+              <div class="field"><label>Name</label><div class="line"></div></div>
+              <div class="field"><label>Position</label><div class="line"></div></div>
+              <div class="field"><label>Signature and Seal</label><div class="box"></div></div>
+            </div>
+            <div class="signature-card">
+              <h3>TATL Intake Control</h3>
+              <div class="field"><label>Received By</label><div class="line"></div></div>
+              <div class="field"><label>Date</label><div class="line"></div></div>
+              <div class="field"><label>Commercial Desk Notes</label><div class="box"></div></div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Controlled commercial intake template</span>
+            <span>Use with the admin booking and quote workflow</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <header class="sheet-header">
+          <div class="brandline">
+            <div class="brand">
+              <h1>Tikur Abay Transport &amp; Logistics PLC</h1>
+              <p>Customer confirmation for approved quotation and service scope</p>
+            </div>
+            <div class="meta">
+              <p>Document Family: Commercial Approval</p>
+              <p>Use: Post-quotation acceptance</p>
+            </div>
+          </div>
+          <div class="titlebar">
+            <div>
+              <h2>Quotation Acceptance Form</h2>
+            </div>
+            <span class="pill">Production Template</span>
+          </div>
+        </header>
+        <div class="sheet-body">
+          <div class="section">
+            <h3>1. Reference Information</h3>
+            <div class="grid three">
+              <div class="field"><label>Quotation Reference Number</label><div class="line"></div></div>
+              <div class="field"><label>Customer Request Number</label><div class="line"></div></div>
+              <div class="field"><label>Date of Quotation</label><div class="line"></div></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>2. Customer Confirmation</h3>
+            <div class="grid two">
+              <div class="field"><label>Company Name</label><div class="line"></div></div>
+              <div class="field"><label>Contact Person</label><div class="line"></div></div>
+              <div class="field"><label>Telephone</label><div class="line"></div></div>
+              <div class="field"><label>Email Address</label><div class="line"></div></div>
+            </div>
+            <div class="field"><label>Address</label><div class="box"></div></div>
+          </div>
+
+          <div class="section">
+            <h3>3. Accepted Service Scope</h3>
+            <div class="section-note">
+              The customer confirms acceptance of the approved Tikur Abay quotation for the logistics, customs,
+              documentation, and inland transport services listed below.
+            </div>
+            <div class="grid two">
+              <div class="field"><label>Service Description</label><div class="box"></div></div>
+              <div class="field"><label>Accepted Amount / Rate</label><div class="box"></div></div>
+            </div>
+            <div class="grid three">
+              <div class="field"><label>Sea Freight</label><div class="line"></div></div>
+              <div class="field"><label>Clearance</label><div class="line"></div></div>
+              <div class="field"><label>Inland Transport</label><div class="line"></div></div>
+              <div class="field"><label>Expected Service Start Date</label><div class="line"></div></div>
+              <div class="field"><label>Payment Terms</label><div class="line"></div></div>
+              <div class="field"><label>Validity Period</label><div class="line"></div></div>
+            </div>
+          </div>
+
+          <div class="signature-grid">
+            <div class="signature-card">
+              <h3>Customer Signature</h3>
+              <div class="field"><label>Name</label><div class="line"></div></div>
+              <div class="field"><label>Position / Title</label><div class="line"></div></div>
+              <div class="field"><label>Signature and Seal</label><div class="box"></div></div>
+            </div>
+            <div class="signature-card">
+              <h3>TATL Acknowledgment</h3>
+              <div class="field"><label>Received and Confirmed By</label><div class="line"></div></div>
+              <div class="field"><label>Position</label><div class="line"></div></div>
+              <div class="field"><label>Signature</label><div class="box"></div></div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Attach approved quotation reference when filing</span>
+            <span>Commercial, finance, and operations should use the same reference number</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <header class="sheet-header">
+          <div class="brandline">
+            <div class="brand">
+              <h1>Tikur Abay Transport &amp; Logistics PLC</h1>
+              <p>Structured booking intake for multimodal, sea freight, and inland delivery operations</p>
+            </div>
+            <div class="meta">
+              <p>Document Family: Shipment Booking</p>
+              <p>Use: Booking confirmation intake</p>
+            </div>
+          </div>
+          <div class="titlebar">
+            <div>
+              <h2>Booking Request Form</h2>
+            </div>
+            <span class="pill">Production Template</span>
+          </div>
+        </header>
+        <div class="sheet-body">
+          <div class="section">
+            <h3>1. Parties</h3>
+            <div class="grid two">
+              <div class="field"><label>Shipper / Exporter</label><div class="box"></div></div>
+              <div class="field"><label>Consignee</label><div class="box"></div></div>
+              <div class="field"><label>Notify Party</label><div class="box"></div></div>
+              <div class="field"><label>Second Notify Party</label><div class="box"></div></div>
+            </div>
+            <div class="grid three">
+              <div class="field"><label>Primary Contact</label><div class="line"></div></div>
+              <div class="field"><label>Telephone</label><div class="line"></div></div>
+              <div class="field"><label>Email</label><div class="line"></div></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>2. Routing and Schedule</h3>
+            <div class="grid three">
+              <div class="field"><label>Port of Loading</label><div class="line"></div></div>
+              <div class="field"><label>Port of Discharge</label><div class="line"></div></div>
+              <div class="field"><label>Place of Delivery</label><div class="line"></div></div>
+              <div class="field"><label>Service Contract Number</label><div class="line"></div></div>
+              <div class="field"><label>Feeder / Vessel Name</label><div class="line"></div></div>
+              <div class="field"><label>Shipping Date / Schedule</label><div class="line"></div></div>
+            </div>
+            <div class="field"><label>Special Routing Remarks</label><div class="box"></div></div>
+          </div>
+
+          <div class="section">
+            <h3>3. Cargo and Container Specification</h3>
+            <div class="grid three">
+              <div class="field"><label>Cargo Type</label><div class="line"></div></div>
+              <div class="field"><label>Container Type / Quantity</label><div class="line"></div></div>
+              <div class="field"><label>Payment Terms</label><div class="line"></div></div>
+            </div>
+            <div class="field"><label>Description of Goods</label><div class="box"></div></div>
+            <div class="grid three">
+              <div class="field"><label>Gross Weight</label><div class="line"></div></div>
+              <div class="field"><label>Measurement / Dimensions</label><div class="line"></div></div>
+              <div class="field"><label>Packages / Units</label><div class="line"></div></div>
+            </div>
+            <div class="grid three">
+              <div class="field"><label>Reefer Temperature Setting</label><div class="line"></div></div>
+              <div class="field"><label>Humidity</label><div class="line"></div></div>
+              <div class="field"><label>Other Special Requirement</label><div class="line"></div></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>4. Booking Confirmation and Delivery Instruction</h3>
+            <div class="grid two">
+              <div class="field"><label>Prepaid At</label><div class="line"></div></div>
+              <div class="field"><label>Collect At</label><div class="line"></div></div>
+              <div class="field"><label>Booking Confirmation To</label><div class="line"></div></div>
+              <div class="field"><label>Delivery Contact</label><div class="line"></div></div>
+            </div>
+          </div>
+
+          <div class="signature-grid">
+            <div class="signature-card">
+              <h3>Customer / Shipper Approval</h3>
+              <div class="field"><label>Name</label><div class="line"></div></div>
+              <div class="field"><label>Title</label><div class="line"></div></div>
+              <div class="field"><label>Signature and Seal</label><div class="box"></div></div>
+            </div>
+            <div class="signature-card">
+              <h3>TATL Booking Control</h3>
+              <div class="field"><label>Accepted By</label><div class="line"></div></div>
+              <div class="field"><label>Booking Reference</label><div class="line"></div></div>
+              <div class="field"><label>Operations Notes</label><div class="box"></div></div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Use after quotation approval or direct booking instruction</span>
+            <span>Fields align with the admin booking and shipping workflow</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

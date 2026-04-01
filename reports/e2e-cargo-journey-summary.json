@@ -1,0 +1,115 @@
+{
+  "executedAt": "2026-03-22T14:41:15.272Z",
+  "apiBase": "http://127.0.0.1:6012/api/v1",
+  "manifest": {
+    "purpose": "Manual demo-validation for the Tikur Abay cargo journey from China supplier origin to customer receipt confirmation and empty return closure.",
+    "environment": {
+      "adminConsole": "http://127.0.0.1:6010",
+      "customerPortal": "http://127.0.0.1:6011",
+      "backendApi": "http://127.0.0.1:6012/api/v1",
+      "mobileApp": "apps/driver Flutter app"
+    },
+    "accounts": {
+      "supplierAgent": {
+        "email": "supplier.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "djiboutiReleaseAgent": {
+        "email": "djibouti.release@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "dispatchAgent": {
+        "email": "dispatch.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "yardAgent": {
+        "email": "yard.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "financeCustoms": {
+        "email": "finance.customs@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "supportAgent": {
+        "email": "support.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "customerUser": {
+        "email": "customer1@tikurabay.com",
+        "password": "ChangeMe123!",
+        "customerCode": "CUST-0001"
+      },
+      "driverUser": {
+        "email": "driver.demo@tikurabay.com",
+        "phone": "+251900000015",
+        "debugOtp": "246810",
+        "driverUserId": "69bf924e624514ac0c598d1e"
+      }
+    },
+    "manualRunOrder": [
+      "Supplier Agent",
+      "Djibouti Release Agent",
+      "Dispatch Agent",
+      "Driver Mobile",
+      "Yard / Dry-Port Agent",
+      "Customer Portal / Customer Mobile",
+      "Empty Return Closure"
+    ],
+    "scenarios": [
+      {
+        "label": "E2E Scenario A",
+        "bookingNumber": "TB-E2E-0001",
+        "shipmentId": "SHP-E2E-0001",
+        "shipmentRef": "TB-E2E-0001",
+        "tripId": "TRP-E2E-0001",
+        "containerNumber": "MSCU1234567",
+        "sealNumber": "SL-908877",
+        "inlandDestination": "Adama Dry Port",
+        "finalDeliveryLocation": "Alem Logistics PLC · Adama Customer Delivery",
+        "expectedOutcome": "Shipment closes cleanly after return receipt upload.",
+        "references": {
+          "bl": "BL-DJI-0001",
+          "invoice": "INV-TB-E2E-0001",
+          "packingList": "PL-TB-E2E-0001",
+          "transit": "TRN-TB-E2E-0001",
+          "releaseNote": "REL-TB-E2E-0001"
+        }
+      },
+      {
+        "label": "E2E Scenario B",
+        "bookingNumber": "TB-E2E-0002",
+        "shipmentId": "SHP-E2E-0002",
+        "shipmentRef": "TB-E2E-0002",
+        "tripId": "TRP-E2E-0002",
+        "containerNumber": "MSCU7654321",
+        "sealNumber": "SL-445566",
+        "inlandDestination": "Combolcha Dry Port",
+        "finalDeliveryLocation": "Alem Logistics PLC · Combolcha Customer Delivery",
+        "expectedOutcome": "Shipment remains blocked for closure until the customer issue is resolved or acknowledged.",
+        "references": {
+          "bl": "BL-DJI-0002",
+          "invoice": "INV-TB-E2E-0002",
+          "packingList": "PL-TB-E2E-0002",
+          "transit": "TRN-TB-E2E-0002",
+          "releaseNote": "REL-TB-E2E-0002"
+        }
+      }
+    ]
+  },
+  "cleanScenario": {
+    "shipmentRef": "TB-E2E-0001",
+    "finalStage": "closed",
+    "customerConfirmationStatus": "received_clean",
+    "podStatus": "approved",
+    "emptyReturnClosed": true,
+    "closeBlocked": false
+  },
+  "issueScenario": {
+    "shipmentRef": "TB-E2E-0002",
+    "finalStage": "empty_return",
+    "customerConfirmationStatus": "received_with_damage",
+    "podStatus": "under_review",
+    "emptyReturnClosed": true,
+    "closeBlocked": true
+  }
+}

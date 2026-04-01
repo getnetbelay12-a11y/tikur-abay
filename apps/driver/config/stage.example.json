@@ -1,0 +1,4 @@
+{
+  "TIKUR_ABAY_APP_ENV": "stage",
+  "TIKUR_ABAY_API_URL": "https://stage-api.tikurabay.example/api/v1"
+}

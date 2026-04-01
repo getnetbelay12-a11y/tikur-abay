@@ -1,0 +1,13 @@
+node_modules
+.git
+.turbo
+**/node_modules
+**/.next
+**/dist
+**/build
+**/.dart_tool
+**/ios/Pods
+**/ios/Flutter/Generated.xcconfig
+**/coverage
+*.log
+.DS_Store

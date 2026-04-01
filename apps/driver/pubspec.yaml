@@ -1,0 +1,28 @@
+name: tikur_abay_driver
+description: Tikur Abay driver mobile app scaffold
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  file_picker: ^10.3.10
+  flutter:
+    sdk: flutter
+  image_picker: ^1.2.1
+  mime: ^2.0.0
+  shared_preferences: ^2.5.3
+  socket_io_client: ^3.1.4
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/branding/tikur-abay-logo.png
+    - assets/images/tikur_abay.png

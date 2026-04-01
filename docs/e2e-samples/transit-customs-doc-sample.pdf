@@ -1,0 +1,47 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1305 >>
+stream
+BT /F1 18 Tf 40 756 Td (TRANSIT / CUSTOMS ACCOMPANYING DOCUMENT) Tj ET
+BT /F1 10 Tf 390 756 Td (Reference: T1-DJI-260321-001) Tj ET
+40 744 m 572 744 l S
+BT /F1 10 Tf 40 724 Td (Movement Reference Number \(MRN\): 26DJI00018455017) Tj ET
+BT /F1 10 Tf 40 708 Td (Office of Departure: Djibouti Port Customs Office) Tj ET
+BT /F1 10 Tf 40 692 Td (Office of Destination: Adama Dry Port Customs Office) Tj ET
+BT /F1 10 Tf 40 676 Td (Principal / Declarant: Tikur Abay Transportation Services) Tj ET
+BT /F1 10 Tf 40 660 Td (Consignee: Nile Star Trading PLC) Tj ET
+BT /F1 10 Tf 40 644 Td (Container / Seal: MSCU3344556 / SL-260321-001) Tj ET
+BT /F1 10 Tf 40 628 Td (Goods: Solar panels and construction hardware / Origin CN / HS 8541.43 + 7318.15) Tj ET
+BT /F1 10 Tf 40 612 Td (Vehicle / Corridor: Djibouti -> Galafi -> Adama Dry Port) Tj ET
+BT /F1 10 Tf 40 596 Td (Guarantee: Transit bond pending final discharge at inland destination) Tj ET
+BT /F1 10 Tf 40 580 Td (Attached Documents: Commercial Invoice, Packing List, Bill of Lading, Release Note) Tj ET
+BT /F1 10 Tf 40 564 Td (Inspection Status: Cleared for inland transit under customs control) Tj ET
+40 92 m 572 92 l S
+BT /F1 9 Tf 42 76 Td (Training mock document for internal E2E and operator workflow testing. Styled after standard shipping paperwork.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001598 00000 n 
+trailer
+<< /Root 1 0 R /Size 6 >>
+startxref
+1668
+%%EOF

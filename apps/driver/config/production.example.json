@@ -1,0 +1,4 @@
+{
+  "TIKUR_ABAY_APP_ENV": "production",
+  "TIKUR_ABAY_API_URL": "https://api.tikurabay.example/api/v1"
+}

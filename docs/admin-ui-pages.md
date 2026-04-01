@@ -1,0 +1,25 @@
+# Admin UI Pages
+
+- `/`: executive overview with KPI cards, live fleet map, alerts, and recent audit activity
+- `/auth/login`: administrator login
+- `/users`: users and role assignment
+- `/customers`: customer directory and account details
+- `/drivers`: driver records, license expiry, emergency contacts
+- `/vehicles`: fleet inventory, status, assignment state, location summary
+- `/trips`: dispatch board with trip timeline and exception flags
+- `/trips/[id]`: trip detail, checkpoints, POD, linked documents, linked chat
+- `/tracking`: live vehicle tracking view
+- `/maintenance-alerts`: due-by-km and due-by-date maintenance alerts
+- `/tire-due-list`: tire inspection threshold view and replacement decisions
+- `/driver-reports`: field report inbox across all report types
+- `/accident-reports`: accident report escalation and response tracking
+- `/obstacle-reports`: obstacle report escalation and route impact view
+- `/fuel-requests`: fuel request approval and dispatch coordination
+- `/agreements`: agreement workflow and version history
+- `/documents`: document upload, approval queue, expiry search
+- `/chat`: internal, trip, and customer chat rooms
+- `/payments`: invoices, payment entry, balance tracking
+- `/hr`: employee basic records and payroll references
+- `/notifications`: notification center
+- `/audit-logs`: audit trail explorer
+- `/dashboards/executive`: executive KPI dashboard

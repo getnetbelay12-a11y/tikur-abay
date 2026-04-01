@@ -1,0 +1,53 @@
+{
+  "cookies": [
+    {
+      "name": "tikur_abay_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6ImFjY2VzcyIsImp0aSI6ImNkM2RhODU1LTcwZmEtNGJiOS04YzQxLWZlNTQ2MjdiMmJmMiIsImlhdCI6MTc3NDkzODcyMiwiZXhwIjoxNzc0OTM5NjIyfQ.4Xr7QAADMNDg0rkQ7D-zOEjE82ikhQBigCfmYWoLJTc",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1775025122,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_refresh_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6InJlZnJlc2giLCJqdGkiOiI2OTE2ZjAxYy1jZGJhLTRhMmItODE2Ni0xYTI1MjVlMGIwNTAiLCJpYXQiOjE3NzQ5Mzg3MjIsImV4cCI6MTc3NzUzMDcyMn0.rvjDIhCbb7wz2k9xBUsi--KVJtzBw0fbieaqZ--3J1s",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1777530722,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_role",
+      "value": "customer",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1775025122,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:6011",
+      "localStorage": [
+        {
+          "name": "tikur-abay-customer-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6ImFjY2VzcyIsImp0aSI6ImNkM2RhODU1LTcwZmEtNGJiOS04YzQxLWZlNTQ2MjdiMmJmMiIsImlhdCI6MTc3NDkzODcyMiwiZXhwIjoxNzc0OTM5NjIyfQ.4Xr7QAADMNDg0rkQ7D-zOEjE82ikhQBigCfmYWoLJTc"
+        },
+        {
+          "name": "tikur-abay-customer-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6InJlZnJlc2giLCJqdGkiOiI2OTE2ZjAxYy1jZGJhLTRhMmItODE2Ni0xYTI1MjVlMGIwNTAiLCJpYXQiOjE3NzQ5Mzg3MjIsImV4cCI6MTc3NzUzMDcyMn0.rvjDIhCbb7wz2k9xBUsi--KVJtzBw0fbieaqZ--3J1s"
+        },
+        {
+          "name": "tikur-abay-customer-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d292c\",\"firstName\":\"Hana\",\"lastName\":\"Negash\",\"name\":\"Hana Negash\",\"email\":\"customer1@tikurabay.com\",\"role\":\"customer\",\"permissions\":[\"dashboard:customer:view\",\"trips:own:view\",\"agreements:own:view\",\"documents:own:view\",\"documents:upload\",\"payments:own:view\",\"chat:own:view\",\"notifications:view\",\"notifications:update\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"customerCode\":\"CUST-0001\",\"phone\":\"+251900000017\",\"mobileRole\":\"customer\",\"dashboardRoute\":\"/customer\"}"
+        }
+      ]
+    }
+  ]
+}

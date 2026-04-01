@@ -1,0 +1,23 @@
+export type RuntimeConfig = {
+    nodeEnv: string;
+    port: number;
+    mongoUri: string;
+    frontendUrl: string;
+    apiPublicUrl: string;
+    localStorageDir: string;
+    fileStorageMode: string;
+    s3Endpoint?: string;
+    s3Region?: string;
+    s3Bucket?: string;
+    s3AccessKey?: string;
+    s3SecretKey?: string;
+    jwtAccessSecret: string;
+    jwtRefreshSecret: string;
+    jwtAccessTtlSeconds: number;
+    jwtRefreshTtlSeconds: number;
+    mapProvider: string;
+    mapboxPublicToken?: string;
+    googleMapsApiKey?: string;
+};
+export declare function getRuntimeConfig(): RuntimeConfig;
+export declare function hashPassword(value: string): string;

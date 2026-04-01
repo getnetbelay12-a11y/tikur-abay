@@ -1,0 +1,105 @@
+{
+  "mode": "prepare",
+  "preparedAt": "2026-03-29T19:52:16.960Z",
+  "apiBase": "http://127.0.0.1:6012/api/v1",
+  "manifest": {
+    "purpose": "One-click demo loader for the Tikur Abay booking-to-closure logistics journey.",
+    "environment": {
+      "adminConsole": "http://127.0.0.1:6010",
+      "customerPortal": "http://127.0.0.1:6011",
+      "backendApi": "http://127.0.0.1:6012/api/v1",
+      "mobileApp": "apps/driver Flutter app"
+    },
+    "accounts": {
+      "supplierAgent": {
+        "email": "supplier.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "djiboutiReleaseAgent": {
+        "email": "djibouti.release@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "clearanceAgent": {
+        "email": "clearance.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "dispatchAgent": {
+        "email": "dispatch.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "yardAgent": {
+        "email": "yard.agent@tikurabay.com",
+        "password": "ChangeMe123!"
+      },
+      "customer1": {
+        "email": "customer1@tikurabay.com",
+        "password": "ChangeMe123!",
+        "customerCode": "CUST-0001"
+      },
+      "customer2": {
+        "email": "customer2@tikurabay.com",
+        "password": "ChangeMe123!",
+        "customerCode": "CUST-0002"
+      },
+      "driverUser": {
+        "email": "driver.demo@tikurabay.com",
+        "phone": "+251900000015",
+        "password": "ChangeMe123!",
+        "debugOtp": "246810",
+        "driverUserId": "69c447680d9b36920fa689e2"
+      }
+    },
+    "walkthroughOrder": [
+      "Executive dashboard",
+      "China Port Agent",
+      "Djibouti Release / Multimodal",
+      "Transitor / Clearance",
+      "Dispatch",
+      "Driver mobile",
+      "Dry Port / Yard",
+      "Customer portal",
+      "Empty return and closure review"
+    ],
+    "scenarios": [
+      {
+        "label": "Scenario A - Happy Path",
+        "bookingNumber": "TB-DEMO-0001",
+        "shipmentId": "SHP-DEMO-0001",
+        "tripId": "TRP-DEMO-0001",
+        "customerCode": "CUST-0001",
+        "containerNumber": "MSCU1111111",
+        "sealNumber": "SL-111111",
+        "blNumber": "BL-DJI-DEMO-0001",
+        "currentStage": "closed",
+        "requestSource": "customer",
+        "expectedOutcome": "Shipment is fully closed after clean customer confirmation and empty return."
+      },
+      {
+        "label": "Scenario B - Customer Issue",
+        "bookingNumber": "TB-DEMO-0002",
+        "shipmentId": "SHP-DEMO-0002",
+        "tripId": "TRP-DEMO-0002",
+        "customerCode": "CUST-0002",
+        "containerNumber": "MSCU2222222",
+        "sealNumber": "SL-222222",
+        "blNumber": "BL-DJI-DEMO-0002",
+        "currentStage": "empty_return",
+        "requestSource": "head_office",
+        "expectedOutcome": "Shipment remains open in empty return with closure blocked by shortage/damage."
+      },
+      {
+        "label": "Scenario C - Clearance Risk",
+        "bookingNumber": "TB-DEMO-0003",
+        "shipmentId": "SHP-DEMO-0003",
+        "tripId": null,
+        "customerCode": "CUST-0001",
+        "containerNumber": "MSCU3333333",
+        "sealNumber": "SL-333333",
+        "blNumber": "BL-DJI-DEMO-0003",
+        "currentStage": "transitor_clearance",
+        "requestSource": "port_agent",
+        "expectedOutcome": "Shipment remains blocked in transitor / clearance until T1 and charges are completed."
+      }
+    ]
+  }
+}

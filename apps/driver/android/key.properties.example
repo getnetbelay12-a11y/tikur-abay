@@ -1,0 +1,4 @@
+storePassword=replace-with-android-keystore-password
+keyPassword=replace-with-android-key-password
+keyAlias=tikur_abay_driver
+storeFile=../keystores/tikur-abay-driver.jks

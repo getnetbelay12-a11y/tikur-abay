@@ -1,0 +1,4 @@
+{
+  "TIKUR_ABAY_APP_ENV": "local",
+  "TIKUR_ABAY_API_URL": "http://127.0.0.1:6012/api/v1"
+}

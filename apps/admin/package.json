@@ -1,0 +1,20 @@
+{
+  "name": "@tikur-abay/admin",
+  "private": true,
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "next": "^15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0",
+    "socket.io-client": "^4.8.3"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true})\" && next build",
+    "start": "next start"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14"
+  }
+}

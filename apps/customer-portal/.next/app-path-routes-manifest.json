@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/dashboard/page": "/dashboard",
+  "/agreements/page": "/agreements",
+  "/bookings/page": "/bookings",
+  "/page": "/",
+  "/invoices/page": "/invoices",
+  "/documents/page": "/documents",
+  "/payments/page": "/payments",
+  "/quotes/[quoteId]/review/page": "/quotes/[quoteId]/review",
+  "/shipments/page": "/shipments",
+  "/support/page": "/support",
+  "/auth/login/page": "/auth/login"
+}

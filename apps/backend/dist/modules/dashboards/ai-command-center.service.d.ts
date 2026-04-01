@@ -1,0 +1,70 @@
+import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+export declare class AiCommandCenterService implements OnModuleInit, OnModuleDestroy {
+    private readonly logger;
+    private readonly timers;
+    onModuleInit(): Promise<void>;
+    onModuleDestroy(): void;
+    getCommandCenterPayload(): Promise<{
+        greeting: string;
+        topRisks: {
+            title: any;
+            description: any;
+            severity: any;
+            score: any;
+            actionLabel: any;
+            actionRoute: any;
+            entityType: any;
+            entityId: any;
+            category: any;
+            secondaryActionLabel: any;
+            secondaryActionTemplate: any;
+        }[];
+        topOpportunities: {
+            title: any;
+            description: any;
+            severity: any;
+            score: any;
+            actionLabel: any;
+            actionRoute: any;
+            entityType: any;
+            entityId: any;
+            category: any;
+            secondaryActionLabel: any;
+            secondaryActionTemplate: any;
+        }[];
+        topActions: {
+            title: any;
+            description: any;
+            severity: any;
+            score: any;
+            actionLabel: any;
+            actionRoute: any;
+            entityType: any;
+            entityId: any;
+            category: any;
+            secondaryActionLabel: any;
+            secondaryActionTemplate: any;
+        }[];
+        summaryText: any;
+        stats: any;
+    }>;
+    refreshAll(): Promise<void>;
+    generateRiskInsights(): Promise<void>;
+    generateOpportunityInsights(): Promise<void>;
+    generateRecommendedActions(): Promise<void>;
+    generateDashboardSnapshot(): Promise<void>;
+    private listInsights;
+    private buildSummaryText;
+    private buildStats;
+    private replaceInsights;
+    private computeDelayedTripRisks;
+    private computeStaleGpsRisks;
+    private computeMaintenanceRisks;
+    private computeInvoiceRisks;
+    private computeKycRisks;
+    private computeIdleFleetOpportunities;
+    private computeCollectionOpportunities;
+    private computeQuoteConversionOpportunities;
+    private computeBranchCapacityOpportunities;
+    private safeRun;
+}

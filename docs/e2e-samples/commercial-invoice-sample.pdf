@@ -1,0 +1,58 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1827 >>
+stream
+BT /F1 18 Tf 40 756 Td (COMMERCIAL INVOICE) Tj ET
+BT /F1 10 Tf 400 756 Td (Invoice No: INV-260321-001) Tj ET
+BT /F1 10 Tf 400 740 Td (Invoice Date: 2026-03-21) Tj ET
+40 732 m 572 732 l S
+BT /F1 10 Tf 40 712 Td (Exporter / Seller:) Tj ET
+BT /F1 10 Tf 40 696 Td (Shanghai East Industrial Supply Co., Ltd) Tj ET
+BT /F1 10 Tf 40 680 Td (No. 88 Pudong Export Road, Shanghai, China) Tj ET
+BT /F1 10 Tf 330 712 Td (Buyer / Consignee:) Tj ET
+BT /F1 10 Tf 330 696 Td (Tikur Abay / Nile Star Trading PLC) Tj ET
+BT /F1 10 Tf 330 680 Td (Adama Dry Port Release Desk, Ethiopia) Tj ET
+BT /F1 10 Tf 40 650 Td (Incoterm: CFR Djibouti) Tj ET
+BT /F1 10 Tf 220 650 Td (Country of Origin: China) Tj ET
+BT /F1 10 Tf 400 650 Td (Final Destination: Adama) Tj ET
+40 638 m 572 638 l S
+BT /F1 10 Tf 40 620 Td (Line  Description                               HS Code   Qty   Unit Price USD   Amount USD) Tj ET
+40 614 m 572 614 l S
+BT /F1 10 Tf 40 596 Td (01    Solar panels                              8541.43   20    480.00           9,600.00) Tj ET
+BT /F1 10 Tf 40 580 Td (02    Construction hardware and fasteners       7318.15   50    38.00            1,900.00) Tj ET
+40 566 m 572 566 l S
+BT /F1 10 Tf 360 548 Td (Subtotal USD: 11,500.00) Tj ET
+BT /F1 10 Tf 360 532 Td (Freight Included: CFR) Tj ET
+BT /F1 10 Tf 360 516 Td (Total Invoice Value USD: 11,500.00) Tj ET
+BT /F1 10 Tf 40 486 Td (Shipment Reference: TB-260321-001 / BL-DJI-260321-001-DRAFT) Tj ET
+BT /F1 10 Tf 40 470 Td (Payment Terms: TT 30% advance, 70% against shipping documents) Tj ET
+BT /F1 10 Tf 40 454 Td (Declaration: We certify that the goods described are of Chinese origin and the values are true and correct.) Tj ET
+40 92 m 572 92 l S
+BT /F1 9 Tf 42 76 Td (Training mock document for internal E2E and operator workflow testing. Styled after standard shipping paperwork.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000002120 00000 n 
+trailer
+<< /Root 1 0 R /Size 6 >>
+startxref
+2190
+%%EOF

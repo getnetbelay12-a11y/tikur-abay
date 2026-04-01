@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c9def4"/>
+      <stop offset="100%" stop-color="#eef4fb"/>
+    </linearGradient>
+    <linearGradient id="yard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a57a57"/>
+      <stop offset="100%" stop-color="#6f5237"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect y="560" width="1600" height="340" fill="url(#yard)"/>
+  <rect x="170" y="255" width="1030" height="290" rx="10" fill="#d86a35"/>
+  <rect x="220" y="310" width="860" height="180" fill="#bd5a2e"/>
+  <g stroke="#f2d7c8" stroke-width="5">
+    <line x1="260" y1="310" x2="260" y2="490"/>
+    <line x1="335" y1="310" x2="335" y2="490"/>
+    <line x1="410" y1="310" x2="410" y2="490"/>
+    <line x1="485" y1="310" x2="485" y2="490"/>
+    <line x1="560" y1="310" x2="560" y2="490"/>
+    <line x1="635" y1="310" x2="635" y2="490"/>
+    <line x1="710" y1="310" x2="710" y2="490"/>
+    <line x1="785" y1="310" x2="785" y2="490"/>
+    <line x1="860" y1="310" x2="860" y2="490"/>
+    <line x1="935" y1="310" x2="935" y2="490"/>
+  </g>
+  <rect x="1115" y="340" width="170" height="130" rx="6" fill="#f4d47a"/>
+  <rect x="1170" y="495" width="58" height="58" rx="8" fill="#333"/>
+  <rect x="1090" y="495" width="58" height="58" rx="8" fill="#333"/>
+  <rect x="520" y="585" width="135" height="110" fill="#e7ecef" stroke="#667" stroke-width="3"/>
+  <rect x="675" y="575" width="150" height="120" fill="#d7dde2" stroke="#667" stroke-width="3"/>
+  <rect x="850" y="590" width="125" height="100" fill="#eff2f4" stroke="#667" stroke-width="3"/>
+  <rect x="40" y="32" width="500" height="128" rx="20" fill="#11253b" opacity="0.94"/>
+  <text x="72" y="82" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">Stuffing confirmation photo</text>
+  <text x="72" y="118" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#d8e6f5">Container MSCU3344556 · Seal pending capture · Shanghai Export Yard</text>
+  <text x="72" y="148" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#d8e6f5">2026-03-21 12:18 CST · Origin loading team</text>
+  <rect x="1130" y="60" width="410" height="148" rx="18" fill="#ffffff" opacity="0.93"/>
+  <text x="1160" y="108" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#10253e">Training mock evidence</text>
+  <text x="1160" y="142" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#41556f">Built to look like a real yard capture,</text>
+  <text x="1160" y="170" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#41556f">for operator workflow testing only.</text>
+</svg>

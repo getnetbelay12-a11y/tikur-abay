@@ -1,0 +1,70 @@
+{
+  "cookies": [
+    {
+      "name": "tikur_abay_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6ImFjY2VzcyIsImp0aSI6IjM3NjVkM2M2LWRmZmMtNGZmYy1hNDQxLTM4ZTZkYjI0YzIzMyIsImlhdCI6MTc3NDg4NDMzMSwiZXhwIjoxNzc0ODg1MjMxfQ.pDSMvIKUSPVRc3GCFCX4V4old91cShNVe0rx6zJMcQY",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1774970731,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_refresh_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6InJlZnJlc2giLCJqdGkiOiI5Y2M5YWVkYy0yZTdkLTRiYjctOGM0Ny02ODczZGUxNzY3OWQiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NzQ3NjMzMX0.zo8bsqeIhTDeizowiMKyZAhdY4CkscuAjBWJLr_eH0w",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1777476331,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_role",
+      "value": "customer",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1774970731,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:6011",
+      "localStorage": [
+        {
+          "name": "tikur-abay-customer-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6ImFjY2VzcyIsImp0aSI6IjM3NjVkM2M2LWRmZmMtNGZmYy1hNDQxLTM4ZTZkYjI0YzIzMyIsImlhdCI6MTc3NDg4NDMzMSwiZXhwIjoxNzc0ODg1MjMxfQ.pDSMvIKUSPVRc3GCFCX4V4old91cShNVe0rx6zJMcQY"
+        },
+        {
+          "name": "tikur-abay-customer-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6InJlZnJlc2giLCJqdGkiOiI5Y2M5YWVkYy0yZTdkLTRiYjctOGM0Ny02ODczZGUxNzY3OWQiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NzQ3NjMzMX0.zo8bsqeIhTDeizowiMKyZAhdY4CkscuAjBWJLr_eH0w"
+        },
+        {
+          "name": "tikur-abay-customer-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d292c\",\"firstName\":\"Hana\",\"lastName\":\"Negash\",\"name\":\"Hana Negash\",\"email\":\"customer1@tikurabay.com\",\"role\":\"customer\",\"permissions\":[\"dashboard:customer:view\",\"trips:own:view\",\"agreements:own:view\",\"documents:own:view\",\"documents:upload\",\"payments:own:view\",\"chat:own:view\",\"notifications:view\",\"notifications:update\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"customerCode\":\"CUST-0001\",\"phone\":\"+251900000017\",\"mobileRole\":\"customer\",\"dashboardRoute\":\"/customer\"}"
+        }
+      ]
+    },
+    {
+      "origin": "http://127.0.0.1:6011",
+      "localStorage": [
+        {
+          "name": "tikur-abay-customer-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6ImFjY2VzcyIsImp0aSI6IjM3NjVkM2M2LWRmZmMtNGZmYy1hNDQxLTM4ZTZkYjI0YzIzMyIsImlhdCI6MTc3NDg4NDMzMSwiZXhwIjoxNzc0ODg1MjMxfQ.pDSMvIKUSPVRc3GCFCX4V4old91cShNVe0rx6zJMcQY"
+        },
+        {
+          "name": "tikur-abay-customer-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MmMiLCJlbWFpbCI6ImN1c3RvbWVyMUB0aWt1cmFiYXkuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwia2luZCI6InJlZnJlc2giLCJqdGkiOiI5Y2M5YWVkYy0yZTdkLTRiYjctOGM0Ny02ODczZGUxNzY3OWQiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NzQ3NjMzMX0.zo8bsqeIhTDeizowiMKyZAhdY4CkscuAjBWJLr_eH0w"
+        },
+        {
+          "name": "tikur-abay-customer-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d292c\",\"firstName\":\"Hana\",\"lastName\":\"Negash\",\"name\":\"Hana Negash\",\"email\":\"customer1@tikurabay.com\",\"role\":\"customer\",\"permissions\":[\"dashboard:customer:view\",\"trips:own:view\",\"agreements:own:view\",\"documents:own:view\",\"documents:upload\",\"payments:own:view\",\"chat:own:view\",\"notifications:view\",\"notifications:update\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"customerCode\":\"CUST-0001\",\"phone\":\"+251900000017\",\"mobileRole\":\"customer\",\"dashboardRoute\":\"/customer\"}"
+        }
+      ]
+    }
+  ]
+}

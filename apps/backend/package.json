@@ -1,0 +1,46 @@
+{
+  "name": "@tikur-abay/backend",
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1007.0",
+    "@aws-sdk/s3-request-presigner": "^3.1007.0",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-socket.io": "^11.1.16",
+    "@nestjs/swagger": "^11.0.3",
+    "@nestjs/websockets": "^11.1.16",
+    "bullmq": "^5.71.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "dotenv": "^16.6.1",
+    "ioredis": "^5.10.0",
+    "mongoose": "^8.18.1",
+    "nodemailer": "^8.0.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.8.3",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.5",
+    "@nestjs/schematics": "^11.0.2",
+    "@nestjs/testing": "^11.0.1",
+    "@types/node": "^22.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "dev": "nest start --watch",
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "lint": "tsc --noEmit",
+    "test": "pnpm build && node --test test/*.test.js",
+    "seed:local": "pnpm build && node dist/database/seed/run-local-seed.js",
+    "reset:local": "pnpm build && node dist/database/seed/reset-local-seed.js",
+    "reset:operations": "pnpm build && node dist/database/seed/reset-operational-data.js",
+    "indexes:sync": "pnpm build && node dist/database/run-index-sync.js",
+    "explain:dashboard": "pnpm build && node dist/database/run-explain-dashboard.js"
+  }
+}

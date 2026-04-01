@@ -1,0 +1,27 @@
+import type { AuthenticatedUser } from '../auth/auth.types';
+import type { CorridorActionAuthorizationRule, CorridorNormalizedShipmentStage, CorridorRole, CorridorStageOwnershipRule, CorridorVisibilityScope } from './corridor.types';
+export type CorridorActorContext = {
+    userId?: string;
+    name?: string;
+    phone?: string;
+    role: CorridorRole;
+    customerCode?: string;
+    mobileRole?: string;
+    permissions: string[];
+};
+export declare const roleAliases: Record<string, CorridorRole>;
+export declare const roleScopes: Record<CorridorRole, CorridorVisibilityScope[]>;
+export declare const stageOwnership: Record<CorridorNormalizedShipmentStage, CorridorRole[]>;
+export declare const actionAuthorization: Record<string, CorridorRole[]>;
+export declare function normalizeCorridorRole(role?: string, mobileRole?: string): CorridorRole;
+export declare function corridorActorFromRequest(user?: AuthenticatedUser, query?: Record<string, unknown>): CorridorActorContext;
+export declare function canViewScope(actor: CorridorActorContext, scope?: string): boolean;
+export declare function canViewShipment(actor: CorridorActorContext, shipment: Record<string, any>, accessRows?: Array<Record<string, any>>): boolean;
+export declare function assertCanViewShipment(actor: CorridorActorContext, shipment: Record<string, any>, accessRows?: Array<Record<string, any>>): void;
+export declare function canPerformShipmentAction(actor: CorridorActorContext, action: string, shipmentStage?: string): boolean;
+export declare function assertCanPerformShipmentAction(actor: CorridorActorContext, action: string, shipmentStage?: string): void;
+export declare function filterScopedList<T extends Record<string, any>>(items: T[], scopeField?: string, actor?: CorridorActorContext): T[];
+export declare function filterInternalFields<T extends Record<string, any>>(payload: T, actor: CorridorActorContext): T;
+export declare function normalizeShipmentStage(value?: string): CorridorNormalizedShipmentStage;
+export declare function buildStageOwnershipRules(): CorridorStageOwnershipRule[];
+export declare function buildActionRules(): CorridorActionAuthorizationRule[];

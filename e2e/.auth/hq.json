@@ -1,0 +1,53 @@
+{
+  "cookies": [
+    {
+      "name": "tikur_abay_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJhY2Nlc3MiLCJqdGkiOiIwNDgwYzlkNi04Nzg1LTRlZDMtOGUwMi04NDg1NmYxYmM0YmMiLCJpYXQiOjE3NzQ5Mzg3MjIsImV4cCI6MTc3NDkzOTYyMn0.ZPpZMv1gkLtrgKQWmpe1sY2rNJZqDdpdZpxeotJctHg",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1775025122,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_refresh_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJyZWZyZXNoIiwianRpIjoiMjYwYTNmMDktMDg4MC00NzRiLTk3ODktOWRiZmQyMGFkMzE4IiwiaWF0IjoxNzc0OTM4NzIyLCJleHAiOjE3Nzc1MzA3MjJ9.pp2lgHwHOP1TozYB019AeAERpOgGO62me5bAZewP7rE",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1777530722,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_role",
+      "value": "super_admin",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 1775025122,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:6010",
+      "localStorage": [
+        {
+          "name": "tikur-abay-admin-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJhY2Nlc3MiLCJqdGkiOiIwNDgwYzlkNi04Nzg1LTRlZDMtOGUwMi04NDg1NmYxYmM0YmMiLCJpYXQiOjE3NzQ5Mzg3MjIsImV4cCI6MTc3NDkzOTYyMn0.ZPpZMv1gkLtrgKQWmpe1sY2rNJZqDdpdZpxeotJctHg"
+        },
+        {
+          "name": "tikur-abay-admin-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJyZWZyZXNoIiwianRpIjoiMjYwYTNmMDktMDg4MC00NzRiLTk3ODktOWRiZmQyMGFkMzE4IiwiaWF0IjoxNzc0OTM4NzIyLCJleHAiOjE3Nzc1MzA3MjJ9.pp2lgHwHOP1TozYB019AeAERpOgGO62me5bAZewP7rE"
+        },
+        {
+          "name": "tikur-abay-admin-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d291c\",\"firstName\":\"Getnet\",\"lastName\":\"Belay\",\"name\":\"Getnet Belay\",\"email\":\"superadmin@tikurabay.com\",\"role\":\"super_admin\",\"permissions\":[\"*\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"phone\":\"+251900000001\",\"dashboardRoute\":\"/\"}"
+        }
+      ]
+    }
+  ]
+}

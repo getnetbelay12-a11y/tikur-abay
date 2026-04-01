@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <radialGradient id="metal" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#f7f9fb"/>
+      <stop offset="100%" stop-color="#b7c1cb"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#1f2e3d"/>
+  <rect x="90" y="90" width="1020" height="1020" rx="28" fill="#e7edf4"/>
+  <circle cx="600" cy="450" r="230" fill="url(#metal)" stroke="#55616d" stroke-width="20"/>
+  <circle cx="600" cy="450" r="78" fill="#1f2e3d"/>
+  <path d="M600 680 C610 860, 790 890, 820 1030" fill="none" stroke="#b7c1cb" stroke-width="26" stroke-linecap="round"/>
+  <rect x="370" y="760" width="460" height="180" rx="16" fill="#d12f2f"/>
+  <text x="600" y="835" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">SL-260321-001</text>
+  <rect x="130" y="130" width="460" height="120" rx="18" fill="#10253e" opacity="0.95"/>
+  <text x="162" y="182" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#ffffff">Seal capture photo</text>
+  <text x="162" y="220" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#d8e6f5">Container MSCU3344556 · 2026-03-21 12:24 CST</text>
+  <text x="600" y="1070" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" fill="#495c70">Training mock seal evidence for release and stuffing workflow tests</text>
+</svg>

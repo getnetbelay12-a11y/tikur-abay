@@ -1,0 +1,70 @@
+{
+  "cookies": [
+    {
+      "name": "tikur_abay_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJhY2Nlc3MiLCJqdGkiOiIwYTMwODA0ZS00ODI2LTRjOWYtOTI1MC05Y2E2NGIxMDEwMjIiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NDg4NTIzMX0.Sq_kToK9DgOADmemYfE8Rn2vTyBYmioquS1YzAoCvQ0",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1774970731,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_refresh_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJyZWZyZXNoIiwianRpIjoiMDJiZDZhN2UtZjI1Yi00NjJmLWE5MmEtYTk3ODJmZmUxNGRiIiwiaWF0IjoxNzc0ODg0MzMxLCJleHAiOjE3Nzc0NzYzMzF9.IEB7qJ4thZU3sYuPUiPH3Zs4lIog0r4uaaP_9_E_R-c",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1777476331,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "tikur_abay_role",
+      "value": "super_admin",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1774970731,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://127.0.0.1:6010",
+      "localStorage": [
+        {
+          "name": "tikur-abay-admin-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJhY2Nlc3MiLCJqdGkiOiIwYTMwODA0ZS00ODI2LTRjOWYtOTI1MC05Y2E2NGIxMDEwMjIiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NDg4NTIzMX0.Sq_kToK9DgOADmemYfE8Rn2vTyBYmioquS1YzAoCvQ0"
+        },
+        {
+          "name": "tikur-abay-admin-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJyZWZyZXNoIiwianRpIjoiMDJiZDZhN2UtZjI1Yi00NjJmLWE5MmEtYTk3ODJmZmUxNGRiIiwiaWF0IjoxNzc0ODg0MzMxLCJleHAiOjE3Nzc0NzYzMzF9.IEB7qJ4thZU3sYuPUiPH3Zs4lIog0r4uaaP_9_E_R-c"
+        },
+        {
+          "name": "tikur-abay-admin-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d291c\",\"firstName\":\"Getnet\",\"lastName\":\"Belay\",\"name\":\"Getnet Belay\",\"email\":\"superadmin@tikurabay.com\",\"role\":\"super_admin\",\"permissions\":[\"*\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"phone\":\"+251900000001\",\"dashboardRoute\":\"/\"}"
+        }
+      ]
+    },
+    {
+      "origin": "http://127.0.0.1:6010",
+      "localStorage": [
+        {
+          "name": "tikur-abay-admin-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJhY2Nlc3MiLCJqdGkiOiIwYTMwODA0ZS00ODI2LTRjOWYtOTI1MC05Y2E2NGIxMDEwMjIiLCJpYXQiOjE3NzQ4ODQzMzEsImV4cCI6MTc3NDg4NTIzMX0.Sq_kToK9DgOADmemYfE8Rn2vTyBYmioquS1YzAoCvQ0"
+        },
+        {
+          "name": "tikur-abay-admin-refresh-token",
+          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OWM5ZmQxNDk0YWRlOTk3YTc5ZDI5MWMiLCJlbWFpbCI6InN1cGVyYWRtaW5AdGlrdXJhYmF5LmNvbSIsInJvbGUiOiJzdXBlcl9hZG1pbiIsImtpbmQiOiJyZWZyZXNoIiwianRpIjoiMDJiZDZhN2UtZjI1Yi00NjJmLWE5MmEtYTk3ODJmZmUxNGRiIiwiaWF0IjoxNzc0ODg0MzMxLCJleHAiOjE3Nzc0NzYzMzF9.IEB7qJ4thZU3sYuPUiPH3Zs4lIog0r4uaaP_9_E_R-c"
+        },
+        {
+          "name": "tikur-abay-admin-user",
+          "value": "{\"id\":\"69c9fd1494ade997a79d291c\",\"firstName\":\"Getnet\",\"lastName\":\"Belay\",\"name\":\"Getnet Belay\",\"email\":\"superadmin@tikurabay.com\",\"role\":\"super_admin\",\"permissions\":[\"*\"],\"branch\":\"Addis Ababa HQ\",\"branchId\":\"69c9fd1494ade997a79d2914\",\"status\":\"active\",\"phone\":\"+251900000001\",\"dashboardRoute\":\"/\"}"
+        }
+      ]
+    }
+  ]
+}

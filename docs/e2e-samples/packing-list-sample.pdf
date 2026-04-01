@@ -1,0 +1,53 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1519 >>
+stream
+BT /F1 18 Tf 40 756 Td (PACKING LIST) Tj ET
+BT /F1 10 Tf 420 756 Td (Packing List No: PL-260321-001) Tj ET
+BT /F1 10 Tf 420 740 Td (Date: 2026-03-21) Tj ET
+40 732 m 572 732 l S
+BT /F1 10 Tf 40 712 Td (Exporter: Shanghai East Industrial Supply Co., Ltd) Tj ET
+BT /F1 10 Tf 40 696 Td (Consignee: Nile Star Trading PLC / Tikur Abay Adama Dry Port) Tj ET
+BT /F1 10 Tf 40 680 Td (Container No: MSCU3344556    Seal No: SL-260321-001    Container Type: 40FT HC) Tj ET
+40 668 m 572 668 l S
+BT /F1 10 Tf 40 650 Td (Pkg   Marks / Numbers         Description                          Gross KG   Net KG   CBM) Tj ET
+40 644 m 572 644 l S
+BT /F1 10 Tf 40 626 Td (Pallet  NST/SLR/01-20         Photovoltaic solar panels           2,900      2,740    7.8) Tj ET
+BT /F1 10 Tf 40 610 Td (Carton  NST/HDW/21-70         Hardware and fasteners              2,400      2,260    3.6) Tj ET
+40 596 m 572 596 l S
+BT /F1 10 Tf 330 578 Td (Total Packages: 70) Tj ET
+BT /F1 10 Tf 330 562 Td (Gross Weight KG: 5,300) Tj ET
+BT /F1 10 Tf 330 546 Td (Net Weight KG: 5,000) Tj ET
+BT /F1 10 Tf 330 530 Td (Total Volume CBM: 11.4) Tj ET
+BT /F1 10 Tf 40 500 Td (Stuffing Location: Shanghai Export Yard) Tj ET
+BT /F1 10 Tf 40 484 Td (Loaded By: Origin loading team) Tj ET
+BT /F1 10 Tf 40 468 Td (Remarks: Pallets stretch-wrapped and corner-protected; cartons stacked on fumigated pallets.) Tj ET
+40 92 m 572 92 l S
+BT /F1 9 Tf 42 76 Td (Training mock document for internal E2E and operator workflow testing. Styled after standard shipping paperwork.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001812 00000 n 
+trailer
+<< /Root 1 0 R /Size 6 >>
+startxref
+1882
+%%EOF

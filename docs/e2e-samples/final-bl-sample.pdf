@@ -1,0 +1,52 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1550 >>
+stream
+BT /F1 18 Tf 40 756 Td (OCEAN BILL OF LADING) Tj ET
+BT /F1 10 Tf 398 756 Td (Carrier: MSC Mediterranean Shipping) Tj ET
+40 744 m 572 744 l S
+BT /F1 10 Tf 40 724 Td (Shipper: Shanghai East Industrial Supply Co., Ltd) Tj ET
+BT /F1 10 Tf 40 708 Td (Consignee: Tikur Abay Transportation Services for Nile Star Trading PLC) Tj ET
+BT /F1 10 Tf 40 692 Td (Notify Party: Tikur Abay Djibouti Release Desk / Adama Dry Port Control) Tj ET
+BT /F1 10 Tf 40 668 Td (Vessel / Voyage: MSC Blue Nile / VOY-260321-001) Tj ET
+BT /F1 10 Tf 310 668 Td (Port of Loading: Shanghai) Tj ET
+BT /F1 10 Tf 310 652 Td (Port of Discharge: Djibouti) Tj ET
+BT /F1 10 Tf 40 652 Td (Place of Delivery: Adama Dry Port) Tj ET
+40 640 m 572 640 l S
+BT /F1 10 Tf 40 622 Td (Container / Seal: MSCU3344556 / SL-260321-001) Tj ET
+BT /F1 10 Tf 40 606 Td (Freight Terms: Freight Prepaid) Tj ET
+BT /F1 10 Tf 40 590 Td (No. of Packages: 70 packages in 1 x 40FT HC container) Tj ET
+BT /F1 10 Tf 40 574 Td (Description of Goods: Solar panels and construction hardware as per invoice INV-260321-001) Tj ET
+BT /F1 10 Tf 40 558 Td (Gross Weight: 5,300 KGS    Measurement: 11.4 CBM) Tj ET
+BT /F1 11 Tf 40 530 Td (Original B/L No: BL-DJI-260321-001) Tj ET
+BT /F1 10 Tf 40 514 Td (Status: Final issued / freight prepaid / release approved) Tj ET
+BT /F1 10 Tf 40 498 Td (Issued at: Shanghai    Date of Issue: 2026-03-22    Originals: 3/3) Tj ET
+40 92 m 572 92 l S
+BT /F1 9 Tf 42 76 Td (Training mock document for internal E2E and operator workflow testing. Styled after standard shipping paperwork.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001843 00000 n 
+trailer
+<< /Root 1 0 R /Size 6 >>
+startxref
+1913
+%%EOF
