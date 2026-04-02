@@ -77,10 +77,10 @@ const dateRangeOptions = [
 ];
 const SIDEBAR_WIDTH_KEY = 'tikur-abay-sidebar-width';
 const SIDEBAR_COLLAPSED_KEY = 'tikur-abay-sidebar-collapsed';
-const SIDEBAR_MIN_WIDTH = 220;
-const SIDEBAR_DEFAULT_WIDTH = 268;
-const SIDEBAR_MAX_WIDTH = 340;
-const SIDEBAR_COLLAPSED_WIDTH = 76;
+const SIDEBAR_MIN_WIDTH = 198;
+const SIDEBAR_DEFAULT_WIDTH = 232;
+const SIDEBAR_MAX_WIDTH = 300;
+const SIDEBAR_COLLAPSED_WIDTH = 72;
 const DESKTOP_BREAKPOINT = 1180;
 const manualDispatchTripStorageKey = 'tikur-abay:manual-corridor:dispatch-trips';
 const shellAiRelevantStorageKeys = new Set([

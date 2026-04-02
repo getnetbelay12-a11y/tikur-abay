@@ -1,0 +1,891 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]:
+          - img "Tikur Abay Transport logo" [ref=e8]
+          - generic [ref=e9]:
+            - generic [ref=e10]: Tikur Abay
+            - heading "Tikur Abay Corridor Command Console" [level=1] [ref=e11]
+        - button "Collapse navigation" [ref=e12] [cursor=pointer]:
+          - img [ref=e13]
+      - generic [ref=e15]:
+        - generic [ref=e16]: Getnet Belay
+        - strong [ref=e17]: super admin
+        - generic [ref=e18]: Addis Ababa HQ
+        - button "Sign out" [ref=e19] [cursor=pointer]
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - img [ref=e23]
+            - generic [ref=e28]: Dashboard
+          - generic [ref=e29]:
+            - link "Executive Dashboard" [ref=e30] [cursor=pointer]:
+              - /url: /
+              - img [ref=e32]
+              - generic [ref=e37]: Executive Dashboard
+            - link "Container Track" [ref=e38] [cursor=pointer]:
+              - /url: /tracking
+              - img [ref=e40]
+              - generic [ref=e43]: Container Track
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - img [ref=e46]
+            - generic [ref=e49]: Shipping
+          - link "Shipping Workspace" [ref=e51] [cursor=pointer]:
+            - /url: /shipping
+            - img [ref=e53]
+            - generic [ref=e56]: Shipping Workspace
+        - generic [ref=e57]:
+          - generic [ref=e58]:
+            - img [ref=e59]
+            - generic [ref=e62]: Settings
+          - generic [ref=e63]:
+            - link "Profile" [ref=e64] [cursor=pointer]:
+              - /url: /profile
+              - img [ref=e66]
+              - generic [ref=e69]: Profile
+            - link "My Account" [ref=e70] [cursor=pointer]:
+              - /url: /account
+              - img [ref=e72]
+              - generic [ref=e75]: My Account
+            - link "Operations Status" [ref=e76] [cursor=pointer]:
+              - /url: /operations-status
+              - img [ref=e78]
+              - generic [ref=e80]: Operations Status
+            - link "System Settings" [ref=e81] [cursor=pointer]:
+              - /url: /settings
+              - img [ref=e83]
+              - generic [ref=e86]: System Settings
+            - link "User Access" [ref=e87] [cursor=pointer]:
+              - /url: /users
+              - img [ref=e89]
+              - generic [ref=e92]: User Access
+      - button "Resize navigation" [ref=e93]
+    - generic [ref=e94]:
+      - banner [ref=e96]:
+        - generic [ref=e97]:
+          - button "Open navigation" [ref=e99]:
+            - img [ref=e100]
+          - generic [ref=e101]:
+            - heading "Executive Dashboard" [level=2] [ref=e102]
+            - paragraph [ref=e103]: Corridor command summary
+        - generic [ref=e106]:
+          - generic [ref=e108]:
+            - img [ref=e109]
+            - textbox "Universal container search" [ref=e112]:
+              - /placeholder: Find container / BL / booking from any page
+          - combobox "Date range" [ref=e114]:
+            - option "Today"
+            - option "Last 7 days"
+            - option "Last 30 days" [selected]
+            - option "This month"
+          - combobox "Branch" [ref=e116]:
+            - option "All branches" [selected]
+            - option "China Origin Desk"
+            - option "Dubai Port Desk"
+            - option "Djibouti Operations"
+            - option "Adama"
+            - option "Combolcha"
+      - generic [ref=e118]:
+        - generic [ref=e119]:
+          - article [ref=e120]:
+            - generic [ref=e121]: "1"
+            - generic [ref=e122]: Total Shipments
+            - generic [ref=e123]: 1 live files
+          - article [ref=e124]:
+            - generic [ref=e125]: "1"
+            - generic [ref=e126]: Active Shipments
+            - generic [ref=e127]: Currently moving
+          - article [ref=e128]:
+            - generic [ref=e129]: "0"
+            - generic [ref=e130]: Delayed Shipments
+            - generic [ref=e131]: Open exceptions
+          - article [ref=e132]:
+            - generic [ref=e133]: "0"
+            - generic [ref=e134]: In Clearance
+            - generic [ref=e135]: Customs pipeline
+          - article [ref=e136]:
+            - generic [ref=e137]: "0"
+            - generic [ref=e138]: In Transit
+            - generic [ref=e139]: Ocean + inland
+          - article [ref=e140]:
+            - generic [ref=e141]: "0"
+            - generic [ref=e142]: Ready for Release
+            - generic [ref=e143]: Finance complete
+          - article [ref=e144]:
+            - generic [ref=e145]: "1"
+            - generic [ref=e146]: Empty Return Pending
+            - generic [ref=e147]: Closure watch
+          - article [ref=e148]:
+            - generic [ref=e149]: 0%
+            - generic [ref=e150]: On-Time Delivery %
+            - generic [ref=e151]: Corridor SLA
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]: Shipment Status Overview
+              - generic [ref=e156]: Current distribution across booked, transit, release, clearance, dispatch, delivery, and delayed files.
+              - generic [ref=e160]:
+                - generic [ref=e161]:
+                  - generic [ref=e163]: Booked
+                  - strong [ref=e164]: "0"
+                - generic [ref=e165]:
+                  - generic [ref=e167]: Sailing / In Transit
+                  - strong [ref=e168]: "0"
+                - generic [ref=e169]:
+                  - generic [ref=e171]: Djibouti / Release
+                  - strong [ref=e172]: "1"
+                - generic [ref=e173]:
+                  - generic [ref=e175]: Clearance
+                  - strong [ref=e176]: "0"
+                - generic [ref=e177]:
+                  - generic [ref=e179]: Dispatch
+                  - strong [ref=e180]: "0"
+                - generic [ref=e181]:
+                  - generic [ref=e183]: Delivered
+                  - strong [ref=e184]: "0"
+                - generic [ref=e185]:
+                  - generic [ref=e187]: Delayed
+                  - strong [ref=e188]: "0"
+            - generic [ref=e189]:
+              - generic [ref=e190]: Shipment Volume & Delay Trend
+              - generic [ref=e191]: Total shipment volume versus delayed files across the last 30 days.
+              - generic [ref=e192]:
+                - img [ref=e193]
+                - generic [ref=e195]:
+                  - generic [ref=e196]: Total shipments
+                  - generic [ref=e198]: Delayed shipments
+                - generic [ref=e200]:
+                  - generic [ref=e201]: Mar 4
+                  - generic [ref=e206]: Mar 9
+                  - generic [ref=e211]: Mar 14
+                  - generic [ref=e216]: Mar 19
+                  - generic [ref=e221]: Mar 24
+                  - generic [ref=e226]: Mar 29
+              - generic [ref=e231]:
+                - article [ref=e232]:
+                  - generic [ref=e233]: Avg Transit Time
+                  - strong [ref=e234]: 0.0 d
+                - article [ref=e235]:
+                  - generic [ref=e236]: Avg Clearance Time
+                  - strong [ref=e237]: 0 h
+                - article [ref=e238]:
+                  - generic [ref=e239]: Avg Inland Delivery Time
+                  - strong [ref=e240]: 0.0 d
+          - generic [ref=e241]:
+            - generic [ref=e242]:
+              - generic [ref=e243]: Bottlenecks & Operational Risk
+              - generic [ref=e244]: Exceptions surfaced for commercial, document, clearance, and closure control.
+              - generic [ref=e245]:
+                - generic [ref=e246]:
+                  - generic [ref=e247]: LC discrepancies
+                  - generic [ref=e248]: "0"
+                - generic [ref=e249]:
+                  - generic [ref=e250]: Quotes awaiting approval
+                  - generic [ref=e251]: "0"
+                - generic [ref=e252]:
+                  - generic [ref=e253]: BL pending
+                  - generic [ref=e254]: "1"
+                - generic [ref=e255]:
+                  - generic [ref=e256]: Missing shipping docs
+                  - generic [ref=e257]: "0"
+                - generic [ref=e258]:
+                  - generic [ref=e259]: Clearance overdue
+                  - generic [ref=e260]: "0"
+                - generic [ref=e261]:
+                  - generic [ref=e262]: Empty return overdue
+                  - generic [ref=e263]: "0"
+              - link "Open Exception Desk" [ref=e264] [cursor=pointer]:
+                - /url: /shipping/tracking
+            - generic [ref=e265]:
+              - generic [ref=e266]: Finance Snapshot
+              - generic [ref=e267]: Collections, cost, reimbursement, and discrepancy visibility for leadership review.
+              - generic [ref=e268]:
+                - article [ref=e269]:
+                  - generic [ref=e270]: Revenue this month
+                  - strong [ref=e271]: $22.6K
+                - article [ref=e272]:
+                  - generic [ref=e273]: Pending collections
+                  - strong [ref=e274]: $22.6K
+                - article [ref=e275]:
+                  - generic [ref=e276]: Cleared payments
+                  - strong [ref=e277]: $0
+                - article [ref=e278]:
+                  - generic [ref=e279]: Driver reimbursements pending
+                  - strong [ref=e280]: "0"
+                - article [ref=e281]:
+                  - generic [ref=e282]: Avg shipment cost
+                  - strong [ref=e283]: $22.6K
+                - article [ref=e284]:
+                  - generic [ref=e285]: Charge discrepancies
+                  - strong [ref=e286]: "0"
+        - generic [ref=e287]:
+          - generic [ref=e288]:
+            - generic [ref=e289]: Carrier & Corridor Performance
+            - generic [ref=e290]: Top carriers, corridor timing, on-time performance, and delay hotspots.
+            - generic [ref=e291]:
+              - article [ref=e292]:
+                - generic [ref=e293]:
+                  - generic [ref=e294]: Shenzhen Service
+                  - strong [ref=e295]: 1 shipments
+              - article [ref=e298]:
+                - generic [ref=e299]:
+                  - generic [ref=e300]: MSC
+                  - strong [ref=e301]: 1 shipments
+              - article [ref=e304]:
+                - generic [ref=e305]:
+                  - generic [ref=e306]: Avg transit time by corridor
+                  - strong [ref=e307]: 0.0 d
+              - article [ref=e310]:
+                - generic [ref=e311]:
+                  - generic [ref=e312]: On-time % by corridor
+                  - strong [ref=e313]: 0%
+              - article [ref=e316]:
+                - generic [ref=e317]:
+                  - generic [ref=e318]: Delay hotspots
+                  - strong [ref=e319]: Addis Ababa -> Addis Ababa (0)
+            - generic [ref=e322]:
+              - generic [ref=e323]:
+                - generic [ref=e324]: Corridor
+                - strong [ref=e325]: Addis Ababa -> Addis Ababa
+              - generic [ref=e326]:
+                - generic [ref=e327]: Active trips
+                - strong [ref=e328]: "0"
+              - generic [ref=e329]:
+                - generic [ref=e330]: Blocked trips
+                - strong [ref=e331]: "0"
+              - generic [ref=e332]:
+                - generic [ref=e333]: Avg ETA
+                - strong [ref=e334]: 0.0 d
+          - generic [ref=e335]:
+            - generic [ref=e336]: Attention Now
+            - generic [ref=e337]: Urgent files requiring executive or desk intervention now.
+            - article [ref=e339]:
+              - generic [ref=e340]:
+                - strong [ref=e341]: OPS-QUEUE
+                - generic [ref=e342]: Critical
+              - generic [ref=e343]:
+                - generic [ref=e344]: Operations queue
+                - generic [ref=e345]: Origin document readiness is holding the shipping packet.
+              - link "Clear Shipping Instruction" [ref=e346] [cursor=pointer]:
+                - /url: /shipping/instructions
+        - generic [ref=e347]:
+          - article [ref=e348]:
+            - generic [ref=e349]: Current Desk
+            - strong [ref=e350]: Booking / Quote
+            - paragraph [ref=e351]: Receive request, issue quote, confirm booking, and capture shipper-commercial details.
+          - article [ref=e352]:
+            - generic [ref=e353]: Key Documents
+            - generic [ref=e354]:
+              - generic [ref=e355]: Quotation request
+              - generic [ref=e356]: Acceptance form
+              - generic [ref=e357]: Booking request
+          - article [ref=e358]:
+            - generic [ref=e359]: Handoff
+            - generic [ref=e360]:
+              - generic [ref=e361]: "Back: Flow start"
+              - 'link "Next: Origin / Supplier" [ref=e362] [cursor=pointer]':
+                - /url: /operations/supplier-agent
+          - article [ref=e363]:
+            - generic [ref=e364]: Next Step Comment
+            - strong [ref=e365]: Origin / Supplier
+            - paragraph [ref=e366]: Collect cargo details, upload origin documents, confirm stuffing, and hand off ocean file.
+          - article [ref=e367]:
+            - generic [ref=e368]:
+              - generic [ref=e369]: AI Operations
+              - generic [ref=e370]: Blocked
+            - strong [ref=e371]: Origin document readiness is holding the shipping packet.
+            - generic [ref=e372]:
+              - generic [ref=e373]:
+                - generic [ref=e374]: Origin docs pending
+                - strong [ref=e375]: "1"
+              - generic [ref=e376]:
+                - generic [ref=e377]: BL pending
+                - strong [ref=e378]: "1"
+              - generic [ref=e379]:
+                - generic [ref=e380]: Manifest pending
+                - strong [ref=e381]: "1"
+            - generic [ref=e382]:
+              - paragraph [ref=e383]: Approved shipping instructions unlock BL approval and stabilize the shipping document chain.
+              - link "Clear Shipping Instruction" [ref=e384] [cursor=pointer]:
+                - /url: /shipping/instructions
+      - main [ref=e386]:
+        - generic [ref=e387]:
+          - generic [ref=e388]:
+            - generic [ref=e389]:
+              - paragraph [ref=e390]: Executive Logistics Dashboard
+              - heading "Tikur Abay Head Office Logistics Command Dashboard" [level=1] [ref=e391]
+              - paragraph [ref=e392]: Dense operational visibility across shipments, revenue, fleet, dispatch, and exception pressure.
+            - generic [ref=e393]:
+              - generic [ref=e394]: Live board
+              - generic [ref=e395]: Updated Apr 2, 2:41 PM
+          - generic [ref=e396]:
+            - generic [ref=e397]:
+              - generic [ref=e398]:
+                - img [ref=e400]
+                - searchbox "Search shipment ID or customer" [ref=e403]
+              - generic [ref=e404]: Live search
+            - generic [ref=e405]:
+              - link "Create Shipment" [ref=e406] [cursor=pointer]:
+                - /url: /shipments/intake?mode=booking
+                - img [ref=e407]
+                - generic [ref=e410]: Create Shipment
+              - link "Dispatch" [ref=e411] [cursor=pointer]:
+                - /url: /operations/corridor-dispatch
+                - img [ref=e412]
+                - generic [ref=e417]: Dispatch
+              - link "View Alerts" [ref=e418] [cursor=pointer]:
+                - /url: "#attention-zone"
+                - img [ref=e419]
+                - generic [ref=e421]: View Alerts
+            - generic [ref=e422]:
+              - generic [ref=e423]:
+                - generic [ref=e424]: Date range
+                - generic [ref=e425]:
+                  - combobox "Date range" [ref=e426]:
+                    - option "Today"
+                    - option "Last 7 days" [selected]
+                    - option "Last 30 days"
+                  - img
+              - generic [ref=e427]:
+                - generic [ref=e428]: Route
+                - generic [ref=e429]:
+                  - combobox "Route" [ref=e430]:
+                    - option "All routes" [selected]
+                    - option "ADD-ADM"
+                    - option "ADD-DJB"
+                    - option "DDW-DJB"
+                    - option "ADD-DDW"
+                    - option "Shenzhen -> Addis Ababa"
+                    - option "Ningbo -> Dubai Port -> Djibouti -> Combolcha Dry Port"
+                    - option "Shenzhen -> Dubai Port -> Djibouti -> Adama Dry Port"
+                    - option "Shanghai -> Dubai Port -> Djibouti -> Adama Dry Port"
+                    - option "KMB-ADD"
+                    - option "MOD-ADD"
+                  - img
+              - generic [ref=e431]:
+                - generic [ref=e432]: Status
+                - generic [ref=e433]:
+                  - combobox "Status" [ref=e434]:
+                    - option "All status" [selected]
+                    - option "Delayed"
+                    - option "In Transit"
+                    - option "Booking Quote"
+                    - option "Empty Return"
+                    - option "Yard Processing"
+                    - option "Djibouti Release"
+                    - option "Origin Preparation"
+                    - option "Ocean In Transit"
+                    - option "Reported"
+                    - option "Under Review"
+                    - option "good"
+                    - option "critical"
+                    - option "warning"
+                  - img
+            - tablist "Time window" [ref=e435]:
+              - button "today" [ref=e436] [cursor=pointer]
+              - button "week" [ref=e437] [cursor=pointer]
+              - button "month" [ref=e438] [cursor=pointer]
+          - generic [ref=e439]:
+            - link "Total Shipments 11 ▼ 73 All tracked files across corridor operations" [ref=e440] [cursor=pointer]:
+              - /url: /shipments/enterprise
+              - generic [ref=e441]:
+                - generic [ref=e442]: Total Shipments
+                - img [ref=e444]
+              - strong [ref=e446]: "11"
+              - generic [ref=e447]:
+                - generic [ref=e448]: ▼
+                - generic [ref=e449]: "73"
+              - paragraph [ref=e450]: All tracked files across corridor operations
+            - link "Active Shipments 84 ▲ 21 21 dispatches pushed today" [ref=e451] [cursor=pointer]:
+              - /url: /trips?status=in_transit
+              - generic [ref=e452]:
+                - generic [ref=e453]: Active Shipments
+                - img [ref=e455]
+              - strong [ref=e460]: "84"
+              - generic [ref=e461]:
+                - generic [ref=e462]: ▲
+                - generic [ref=e463]: "21"
+              - paragraph [ref=e464]: 21 dispatches pushed today
+            - link "Delayed Shipments 14 ▲ 14 8 priority files require recovery" [ref=e465] [cursor=pointer]:
+              - /url: /trips?status=delayed
+              - generic [ref=e466]:
+                - generic [ref=e467]: Delayed Shipments
+                - img [ref=e469]
+              - strong [ref=e472]: "14"
+              - generic [ref=e473]:
+                - generic [ref=e474]: ▲
+                - generic [ref=e475]: "14"
+              - paragraph [ref=e476]: 8 priority files require recovery
+            - link "Revenue (ETB) ETB 1,048,000 ▼ ETB 12,562,000 10 recent paid movements across active files" [ref=e477] [cursor=pointer]:
+              - /url: /finance
+              - generic [ref=e478]:
+                - generic [ref=e479]: Revenue (ETB)
+                - img [ref=e481]
+              - strong [ref=e484]: ETB 1,048,000
+              - generic [ref=e485]:
+                - generic [ref=e486]: ▼
+                - generic [ref=e487]: ETB 12,562,000
+              - paragraph [ref=e488]: 10 recent paid movements across active files
+            - link "Fleet Utilization % 60% ▲ 30 pts 48/80 units engaged right now" [ref=e489] [cursor=pointer]:
+              - /url: /tracking
+              - generic [ref=e490]:
+                - generic [ref=e491]: Fleet Utilization %
+                - img [ref=e493]
+              - strong [ref=e496]: 60%
+              - generic [ref=e497]:
+                - generic [ref=e498]: ▲
+                - generic [ref=e499]: 30 pts
+              - paragraph [ref=e500]: 48/80 units engaged right now
+            - link "On-time Delivery % 100% ▲ 15 pts 0% variance against plan" [ref=e501] [cursor=pointer]:
+              - /url: /trips
+              - generic [ref=e502]:
+                - generic [ref=e503]: On-time Delivery %
+                - img [ref=e505]
+              - strong [ref=e510]: 100%
+              - generic [ref=e511]:
+                - generic [ref=e512]: ▲
+                - generic [ref=e513]: 15 pts
+              - paragraph [ref=e514]: 0% variance against plan
+            - link "Incidents Today 45 ▲ 45 8 latest incident and alert records" [ref=e515] [cursor=pointer]:
+              - /url: /driver-reports
+              - generic [ref=e516]:
+                - generic [ref=e517]: Incidents Today
+                - img [ref=e519]
+              - strong [ref=e521]: "45"
+              - generic [ref=e522]:
+                - generic [ref=e523]: ▲
+                - generic [ref=e524]: "45"
+              - paragraph [ref=e525]: 8 latest incident and alert records
+          - generic [ref=e526]:
+            - generic [ref=e527]:
+              - paragraph [ref=e528]: Attention
+              - heading "Attention Zone" [level=2] [ref=e529]
+              - paragraph [ref=e530]: Delayed shipments, incidents, and blockers requiring immediate head office action
+            - generic [ref=e531]:
+              - generic [ref=e533]:
+                - paragraph [ref=e534]: Critical visibility
+                - heading "Delayed, blocked, and incident feed" [level=2] [ref=e535]
+              - table [ref=e537]:
+                - rowgroup [ref=e538]:
+                  - row "Shipment ID Issue Severity Route Time" [ref=e539]:
+                    - columnheader "Shipment ID" [ref=e540]
+                    - columnheader "Issue" [ref=e541]
+                    - columnheader "Severity" [ref=e542]
+                    - columnheader "Route" [ref=e543]
+                    - columnheader "Time" [ref=e544]
+                - rowgroup [ref=e545]:
+                  - link "SHP-260402-144137609 Compliance / dispatch blocker good Shenzhen -> Addis Ababa Apr 2, 2:41 PM" [ref=e546] [cursor=pointer]:
+                    - cell "SHP-260402-144137609" [ref=e547]:
+                      - link "SHP-260402-144137609" [ref=e548]:
+                        - /url: /shipments/enterprise?shipmentRef=SHP-260402-144137609
+                    - cell "Compliance / dispatch blocker" [ref=e549]
+                    - cell "good" [ref=e550]:
+                      - generic [ref=e551]: good
+                    - cell "Shenzhen -> Addis Ababa" [ref=e552]
+                    - cell "Apr 2, 2:41 PM" [ref=e553]
+                  - link "TAB-IMP-2603-006 Shortage review still open before shipment closure. good Ningbo -> Dubai Port -> Djibouti -> Combolcha Dry Port Apr 2, 1:41 PM" [ref=e554] [cursor=pointer]:
+                    - cell "TAB-IMP-2603-006" [ref=e555]:
+                      - link "TAB-IMP-2603-006" [ref=e556]:
+                        - /url: /shipments/enterprise?shipmentRef=TAB-IMP-2603-006
+                    - cell "Shortage review still open before shipment closure." [ref=e557]
+                    - cell "good" [ref=e558]:
+                      - generic [ref=e559]: good
+                    - cell "Ningbo -> Dubai Port -> Djibouti -> Combolcha Dry Port" [ref=e560]
+                    - cell "Apr 2, 1:41 PM" [ref=e561]
+                  - link "TAB-IMP-2603-005 Outstanding customs handling balance critical Shenzhen -> Dubai Port -> Djibouti -> Adama Dry Port Apr 2, 1:41 PM" [ref=e562] [cursor=pointer]:
+                    - cell "TAB-IMP-2603-005" [ref=e563]:
+                      - link "TAB-IMP-2603-005" [ref=e564]:
+                        - /url: /shipments/enterprise?shipmentRef=TAB-IMP-2603-005
+                    - cell "Outstanding customs handling balance" [ref=e565]
+                    - cell "critical" [ref=e566]:
+                      - generic [ref=e567]: critical
+                    - cell "Shenzhen -> Dubai Port -> Djibouti -> Adama Dry Port" [ref=e568]
+                    - cell "Apr 2, 1:41 PM" [ref=e569]
+                  - link "TAB-IMP-2603-003 Compliance / dispatch blocker good Shanghai -> Dubai Port -> Djibouti -> Adama Dry Port Apr 2, 1:41 PM" [ref=e570] [cursor=pointer]:
+                    - cell "TAB-IMP-2603-003" [ref=e571]:
+                      - link "TAB-IMP-2603-003" [ref=e572]:
+                        - /url: /shipments/enterprise?shipmentRef=TAB-IMP-2603-003
+                    - cell "Compliance / dispatch blocker" [ref=e573]
+                    - cell "good" [ref=e574]:
+                      - generic [ref=e575]: good
+                    - cell "Shanghai -> Dubai Port -> Djibouti -> Adama Dry Port" [ref=e576]
+                    - cell "Apr 2, 1:41 PM" [ref=e577]
+                  - link "TAB-IMP-2603-001 Outstanding customs handling balance critical Shenzhen -> Dubai Port -> Djibouti -> Adama Dry Port Apr 2, 1:41 PM" [ref=e578] [cursor=pointer]:
+                    - cell "TAB-IMP-2603-001" [ref=e579]:
+                      - link "TAB-IMP-2603-001" [ref=e580]:
+                        - /url: /shipments/enterprise?shipmentRef=TAB-IMP-2603-001
+                    - cell "Outstanding customs handling balance" [ref=e581]
+                    - cell "critical" [ref=e582]:
+                      - generic [ref=e583]: critical
+                    - cell "Shenzhen -> Dubai Port -> Djibouti -> Adama Dry Port" [ref=e584]
+                    - cell "Apr 2, 1:41 PM" [ref=e585]
+                  - link "TAB-IMP-2603-002 Compliance / dispatch blocker good Ningbo -> Dubai Port -> Djibouti -> Combolcha Dry Port Apr 2, 1:41 PM" [ref=e586] [cursor=pointer]:
+                    - cell "TAB-IMP-2603-002" [ref=e587]:
+                      - link "TAB-IMP-2603-002" [ref=e588]:
+                        - /url: /shipments/enterprise?shipmentRef=TAB-IMP-2603-002
+                    - cell "Compliance / dispatch blocker" [ref=e589]
+                    - cell "good" [ref=e590]:
+                      - generic [ref=e591]: good
+                    - cell "Ningbo -> Dubai Port -> Djibouti -> Combolcha Dry Port" [ref=e592]
+                    - cell "Apr 2, 1:41 PM" [ref=e593]
+                  - link "TRIP-00007 Breakdown Report critical ADD-DJB Apr 2, 1:41 PM" [ref=e594] [cursor=pointer]:
+                    - cell "TRIP-00007" [ref=e595]:
+                      - link "TRIP-00007" [ref=e596]:
+                        - /url: /trips?trip=TRIP-00007
+                    - cell "Breakdown Report" [ref=e597]
+                    - cell "critical" [ref=e598]:
+                      - generic [ref=e599]: critical
+                    - cell "ADD-DJB" [ref=e600]
+                    - cell "Apr 2, 1:41 PM" [ref=e601]
+                  - link "TRIP-00006 Accident Report warning ADD-DDW Apr 2, 1:41 PM" [ref=e602] [cursor=pointer]:
+                    - cell "TRIP-00006" [ref=e603]:
+                      - link "TRIP-00006" [ref=e604]:
+                        - /url: /trips?trip=TRIP-00006
+                    - cell "Accident Report" [ref=e605]
+                    - cell "warning" [ref=e606]:
+                      - generic [ref=e607]: warning
+                    - cell "ADD-DDW" [ref=e608]
+                    - cell "Apr 2, 1:41 PM" [ref=e609]
+                  - link "TRIP-00004 Obstacle Report critical ADD-DJB Apr 2, 1:41 PM" [ref=e610] [cursor=pointer]:
+                    - cell "TRIP-00004" [ref=e611]:
+                      - link "TRIP-00004" [ref=e612]:
+                        - /url: /trips?trip=TRIP-00004
+                    - cell "Obstacle Report" [ref=e613]
+                    - cell "critical" [ref=e614]:
+                      - generic [ref=e615]: critical
+                    - cell "ADD-DJB" [ref=e616]
+                    - cell "Apr 2, 1:41 PM" [ref=e617]
+                  - link "TRIP-00008 Delay Report critical ADD-ADM Apr 2, 1:41 PM" [ref=e618] [cursor=pointer]:
+                    - cell "TRIP-00008" [ref=e619]:
+                      - link "TRIP-00008" [ref=e620]:
+                        - /url: /trips?trip=TRIP-00008
+                    - cell "Delay Report" [ref=e621]
+                    - cell "critical" [ref=e622]:
+                      - generic [ref=e623]: critical
+                    - cell "ADD-ADM" [ref=e624]
+                    - cell "Apr 2, 1:41 PM" [ref=e625]
+                  - link "TRIP-00002 Breakdown Report warning ADD-ADM Apr 2, 1:41 PM" [ref=e626] [cursor=pointer]:
+                    - cell "TRIP-00002" [ref=e627]:
+                      - link "TRIP-00002" [ref=e628]:
+                        - /url: /trips?trip=TRIP-00002
+                    - cell "Breakdown Report" [ref=e629]
+                    - cell "warning" [ref=e630]:
+                      - generic [ref=e631]: warning
+                    - cell "ADD-ADM" [ref=e632]
+                    - cell "Apr 2, 1:41 PM" [ref=e633]
+                  - link "TRIP-00003 Delay Report critical ADD-DDW Apr 2, 1:41 PM" [ref=e634] [cursor=pointer]:
+                    - cell "TRIP-00003" [ref=e635]:
+                      - link "TRIP-00003" [ref=e636]:
+                        - /url: /trips?trip=TRIP-00003
+                    - cell "Delay Report" [ref=e637]
+                    - cell "critical" [ref=e638]:
+                      - generic [ref=e639]: critical
+                    - cell "ADD-DDW" [ref=e640]
+                    - cell "Apr 2, 1:41 PM" [ref=e641]
+          - generic [ref=e642]:
+            - generic [ref=e643]:
+              - paragraph [ref=e644]: Analytics
+              - heading "Analytics" [level=2] [ref=e645]
+              - paragraph [ref=e646]: Trend, revenue, and service-level visibility across the current operating window
+            - generic [ref=e647]:
+              - generic [ref=e648]:
+                - generic [ref=e649]:
+                  - generic [ref=e650]:
+                    - img [ref=e652]
+                    - generic [ref=e654]:
+                      - paragraph [ref=e655]: Dispatches and delayed movement across the last 7 days
+                      - heading "Shipment Trend Over Time" [level=2] [ref=e656]
+                  - link [ref=e657] [cursor=pointer]:
+                    - /url: /operations
+                    - img [ref=e658]
+                - generic [ref=e661]:
+                  - list [ref=e663]:
+                    - listitem [ref=e664]:
+                      - img "Delayed legend icon" [ref=e665]
+                      - text: Delayed
+                    - listitem [ref=e667]:
+                      - img "Dispatches legend icon" [ref=e668]
+                      - text: Dispatches
+                  - application [ref=e670]:
+                    - generic [ref=e678]:
+                      - generic [ref=e679]:
+                        - generic [ref=e681]: Fri
+                        - generic [ref=e683]: Sat
+                        - generic [ref=e685]: Sun
+                        - generic [ref=e687]: Mon
+                        - generic [ref=e689]: Tue
+                        - generic [ref=e691]: Wed
+                        - generic [ref=e693]: Thu
+                      - generic [ref=e694]:
+                        - generic [ref=e696]: "0"
+                        - generic [ref=e698]: "6"
+                        - generic [ref=e700]: "12"
+                        - generic [ref=e702]: "18"
+                        - generic [ref=e704]: "24"
+              - generic [ref=e705]:
+                - generic [ref=e706]:
+                  - generic [ref=e707]:
+                    - img [ref=e709]
+                    - generic [ref=e712]:
+                      - paragraph [ref=e713]: Top earning lanes with delay context
+                      - heading "Revenue By Route" [level=2] [ref=e714]
+                  - link [ref=e715] [cursor=pointer]:
+                    - /url: /dashboards/executive/revenue-by-route
+                    - img [ref=e716]
+                - generic [ref=e719]:
+                  - list [ref=e721]:
+                    - listitem [ref=e722]:
+                      - img "Delayed legend icon" [ref=e723]
+                      - text: Delayed
+                    - listitem [ref=e725]:
+                      - img "Revenue legend icon" [ref=e726]
+                      - text: Revenue
+                  - application [ref=e728]:
+                    - generic [ref=e751]:
+                      - generic [ref=e752]:
+                        - generic [ref=e754]: ADD-ADM
+                        - generic [ref=e756]: KMB-ADD
+                        - generic [ref=e758]: MOD-ADD
+                      - generic [ref=e759]:
+                        - generic [ref=e761]: "0"
+                        - generic [ref=e763]: "4000000"
+                        - generic [ref=e765]: "8000000"
+                        - generic [ref=e767]: "12000000"
+                        - generic [ref=e769]: "16000000"
+              - generic [ref=e770]:
+                - generic [ref=e771]:
+                  - generic [ref=e772]:
+                    - img [ref=e774]
+                    - generic [ref=e777]:
+                      - paragraph [ref=e778]: 14 delayed out of 84 active shipments
+                      - heading "Delay Percentage" [level=2] [ref=e779]
+                  - link [ref=e780] [cursor=pointer]:
+                    - /url: /trips?status=delayed
+                    - img [ref=e781]
+                - generic [ref=e783]:
+                  - application [ref=e786]
+                  - generic:
+                    - strong: 17%
+                    - generic: delay share
+          - generic [ref=e796]:
+            - generic [ref=e797]:
+              - paragraph [ref=e798]: Operations
+              - heading "Operations" [level=2] [ref=e799]
+              - paragraph [ref=e800]: Route pressure, branch performance, queue execution, and readiness in one view
+            - generic [ref=e801]:
+              - generic [ref=e802]:
+                - generic [ref=e803]:
+                  - generic [ref=e804]:
+                    - img [ref=e806]
+                    - generic [ref=e811]:
+                      - paragraph [ref=e812]: Revenue, delay count, and on-time rate by route
+                      - heading "Route Performance" [level=2] [ref=e813]
+                  - link [ref=e814] [cursor=pointer]:
+                    - /url: /dashboards/executive/revenue-by-route
+                    - img [ref=e815]
+                - generic [ref=e818]:
+                  - list [ref=e820]:
+                    - listitem [ref=e821]:
+                      - img "Delayed legend icon" [ref=e822]
+                      - text: Delayed
+                    - listitem [ref=e824]:
+                      - img "Revenue legend icon" [ref=e825]
+                      - text: Revenue
+                  - application [ref=e827]:
+                    - generic [ref=e856]:
+                      - generic [ref=e857]:
+                        - generic [ref=e859]: "0"
+                        - generic [ref=e861]: "8000000"
+                        - generic [ref=e863]: "16000000"
+                      - generic [ref=e864]:
+                        - generic [ref=e866]: ADD-DJB
+                        - generic [ref=e868]: ADD-ADM
+                        - generic [ref=e870]: ADD-DDW
+                        - generic [ref=e872]: KMB-ADD
+                        - generic [ref=e874]: DDW-DJB
+                        - generic [ref=e876]: MOD-ADD
+              - generic [ref=e877]:
+                - generic [ref=e878]:
+                  - generic [ref=e879]:
+                    - img [ref=e881]
+                    - generic [ref=e884]:
+                      - paragraph [ref=e885]: Delay, blocked units, and availability by branch
+                      - heading "Branch Performance" [level=2] [ref=e886]
+                  - link [ref=e887] [cursor=pointer]:
+                    - /url: /operations
+                    - img [ref=e888]
+                - generic [ref=e891]:
+                  - list [ref=e893]:
+                    - listitem [ref=e894]:
+                      - img "Availability % legend icon" [ref=e895]
+                      - text: Availability %
+                    - listitem [ref=e897]:
+                      - img "Blocked legend icon" [ref=e898]
+                      - text: Blocked
+                    - listitem [ref=e900]:
+                      - img "Delayed legend icon" [ref=e901]
+                      - text: Delayed
+                  - application [ref=e903]:
+                    - generic [ref=e956]:
+                      - generic [ref=e957]:
+                        - generic [ref=e959]: Kombolcha
+                        - generic [ref=e961]: Modjo
+                        - generic [ref=e963]: Adama
+                      - generic [ref=e964]:
+                        - generic [ref=e966]: "0"
+                        - generic [ref=e968]: "10"
+                        - generic [ref=e970]: "20"
+                        - generic [ref=e972]: "30"
+                        - generic [ref=e974]: "40"
+            - generic [ref=e975]:
+              - generic [ref=e976]:
+                - generic [ref=e977]:
+                  - generic [ref=e978]:
+                    - paragraph [ref=e979]: Dispatch Queue
+                    - heading "Real-time dispatch queue" [level=2] [ref=e980]
+                  - link "Open queue" [ref=e981] [cursor=pointer]:
+                    - /url: /operations
+                - table [ref=e983]:
+                  - rowgroup [ref=e984]:
+                    - row "Shipment Route Status Owner ETA Delay" [ref=e985]:
+                      - columnheader "Shipment" [ref=e986]
+                      - columnheader "Route" [ref=e987]
+                      - columnheader "Status" [ref=e988]
+                      - columnheader "Owner" [ref=e989]
+                      - columnheader "ETA" [ref=e990]
+                      - columnheader "Delay" [ref=e991]
+                  - rowgroup [ref=e992]:
+                    - link "TRIP-00118 ADD-ADM Delayed Yohannes Abebe Mar 6 510 min" [ref=e993] [cursor=pointer]:
+                      - cell "TRIP-00118" [ref=e994]:
+                        - link "TRIP-00118" [ref=e995]:
+                          - /url: /trips?trip=TRIP-00118
+                      - cell "ADD-ADM" [ref=e996]
+                      - cell "Delayed" [ref=e997]:
+                        - generic [ref=e998]: Delayed
+                      - cell "Yohannes Abebe" [ref=e999]
+                      - cell "Mar 6" [ref=e1000]
+                      - cell "510 min" [ref=e1001]
+                    - link "TRIP-00020 ADD-DJB Delayed Sara Abebe Apr 2 510 min" [ref=e1002] [cursor=pointer]:
+                      - cell "TRIP-00020" [ref=e1003]:
+                        - link "TRIP-00020" [ref=e1004]:
+                          - /url: /trips?trip=TRIP-00020
+                      - cell "ADD-DJB" [ref=e1005]
+                      - cell "Delayed" [ref=e1006]:
+                        - generic [ref=e1007]: Delayed
+                      - cell "Sara Abebe" [ref=e1008]
+                      - cell "Apr 2" [ref=e1009]
+                      - cell "510 min" [ref=e1010]
+                    - link "TRIP-00097 DDW-DJB Delayed Selamawit Abebe Mar 29 510 min" [ref=e1011] [cursor=pointer]:
+                      - cell "TRIP-00097" [ref=e1012]:
+                        - link "TRIP-00097" [ref=e1013]:
+                          - /url: /trips?trip=TRIP-00097
+                      - cell "DDW-DJB" [ref=e1014]
+                      - cell "Delayed" [ref=e1015]:
+                        - generic [ref=e1016]: Delayed
+                      - cell "Selamawit Abebe" [ref=e1017]
+                      - cell "Mar 29" [ref=e1018]
+                      - cell "510 min" [ref=e1019]
+                    - link "TRIP-00033 ADD-DDW Delayed Ruth Abebe Mar 1 465 min" [ref=e1020] [cursor=pointer]:
+                      - cell "TRIP-00033" [ref=e1021]:
+                        - link "TRIP-00033" [ref=e1022]:
+                          - /url: /trips?trip=TRIP-00033
+                      - cell "ADD-DDW" [ref=e1023]
+                      - cell "Delayed" [ref=e1024]:
+                        - generic [ref=e1025]: Delayed
+                      - cell "Ruth Abebe" [ref=e1026]
+                      - cell "Mar 1" [ref=e1027]
+                      - cell "465 min" [ref=e1028]
+                    - link "TRIP-00012 ADD-DDW Delayed Yared Abebe Apr 2 465 min" [ref=e1029] [cursor=pointer]:
+                      - cell "TRIP-00012" [ref=e1030]:
+                        - link "TRIP-00012" [ref=e1031]:
+                          - /url: /trips?trip=TRIP-00012
+                      - cell "ADD-DDW" [ref=e1032]
+                      - cell "Delayed" [ref=e1033]:
+                        - generic [ref=e1034]: Delayed
+                      - cell "Yared Abebe" [ref=e1035]
+                      - cell "Apr 2" [ref=e1036]
+                      - cell "465 min" [ref=e1037]
+                    - link "TRIP-00004 ADD-DJB Delayed Samrawit Abebe Apr 2 420 min" [ref=e1038] [cursor=pointer]:
+                      - cell "TRIP-00004" [ref=e1039]:
+                        - link "TRIP-00004" [ref=e1040]:
+                          - /url: /trips?trip=TRIP-00004
+                      - cell "ADD-DJB" [ref=e1041]
+                      - cell "Delayed" [ref=e1042]:
+                        - generic [ref=e1043]: Delayed
+                      - cell "Samrawit Abebe" [ref=e1044]
+                      - cell "Apr 2" [ref=e1045]
+                      - cell "420 min" [ref=e1046]
+                    - link "TRIP-00066 ADD-DJB In Transit Selam Abebe Jan 29 375 min" [ref=e1047] [cursor=pointer]:
+                      - cell "TRIP-00066" [ref=e1048]:
+                        - link "TRIP-00066" [ref=e1049]:
+                          - /url: /trips?trip=TRIP-00066
+                      - cell "ADD-DJB" [ref=e1050]
+                      - cell "In Transit" [ref=e1051]:
+                        - generic [ref=e1052]: In Transit
+                      - cell "Selam Abebe" [ref=e1053]
+                      - cell "Jan 29" [ref=e1054]
+                      - cell "375 min" [ref=e1055]
+                    - link "TRIP-00030 ADD-DJB Delayed Biniyam Haile Mar 6 330 min" [ref=e1056] [cursor=pointer]:
+                      - cell "TRIP-00030" [ref=e1057]:
+                        - link "TRIP-00030" [ref=e1058]:
+                          - /url: /trips?trip=TRIP-00030
+                      - cell "ADD-DJB" [ref=e1059]
+                      - cell "Delayed" [ref=e1060]:
+                        - generic [ref=e1061]: Delayed
+                      - cell "Biniyam Haile" [ref=e1062]
+                      - cell "Mar 6" [ref=e1063]
+                      - cell "330 min" [ref=e1064]
+              - generic [ref=e1065]:
+                - generic [ref=e1066]:
+                  - generic [ref=e1067]:
+                    - generic [ref=e1068]:
+                      - img [ref=e1070]
+                      - generic [ref=e1075]:
+                        - paragraph [ref=e1076]: 23% of fleet ready for assignment
+                        - heading "Fleet Availability" [level=2] [ref=e1077]
+                    - link [ref=e1078] [cursor=pointer]:
+                      - /url: /tracking
+                      - img [ref=e1079]
+                  - application [ref=e1083]
+                  - generic [ref=e1104]:
+                    - generic [ref=e1105]: "Available: 18"
+                    - generic [ref=e1107]: "Utilized: 48"
+                    - generic [ref=e1109]: "Maintenance: 10"
+                    - generic [ref=e1111]: "Blocked: 62"
+                - generic [ref=e1113]:
+                  - generic [ref=e1114]:
+                    - generic [ref=e1115]:
+                      - img [ref=e1117]
+                      - generic [ref=e1120]:
+                        - paragraph [ref=e1121]: 0% driver readiness
+                        - heading "Driver Availability" [level=2] [ref=e1122]
+                    - link [ref=e1123] [cursor=pointer]:
+                      - /url: /drivers
+                      - img [ref=e1124]
+                  - application [ref=e1128]
+                  - generic [ref=e1138]:
+                    - generic [ref=e1139]: "Ready: 0"
+                    - generic [ref=e1141]: "On trip: 15"
+                    - generic [ref=e1143]: "Unavailable: 0"
+                    - generic [ref=e1145]: "Attention: 5"
+  - generic [ref=e1151] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e1152]:
+      - img [ref=e1153]
+    - generic [ref=e1156]:
+      - button "Open issues overlay" [ref=e1157]:
+        - generic [ref=e1158]:
+          - generic [ref=e1159]: "1"
+          - generic [ref=e1160]: "2"
+        - generic [ref=e1161]:
+          - text: Issue
+          - generic [ref=e1162]: s
+      - button "Collapse issues badge" [ref=e1163]:
+        - img [ref=e1164]
+  - alert [ref=e1166]
+  - generic [ref=e1167]: "10"
+```

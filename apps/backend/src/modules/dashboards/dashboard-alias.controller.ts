@@ -68,6 +68,12 @@ export class DashboardAliasController {
     return this.dashboardsService.getExecutiveWorkspace(tab as any);
   }
 
+  @Get('head-office-command-center')
+  @Permissions('dashboards:executive:view')
+  async headOfficeCommandCenter() {
+    return this.dashboardsService.getHeadOfficeCommandCenter();
+  }
+
   @Get('communications/history')
   @Permissions('dashboards:executive:view', 'payments:view', 'trips:view', 'drivers:view', 'maintenance:view')
   async communicationHistory(

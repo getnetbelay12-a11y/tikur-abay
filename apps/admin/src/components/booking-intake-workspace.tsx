@@ -1600,6 +1600,15 @@ function validateForm(form: IntakeFormState, mode: IntakeMode): InlineErrors {
   if (!String(form.phone || '').trim()) {
     errors.phone = 'Phone is required.';
   }
+  if (String(form.email || '').trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(form.email).trim())) {
+    errors.email = 'Enter a valid customer email address.';
+  }
+  if (String(form.shipperEmail || '').trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(form.shipperEmail).trim())) {
+    errors.shipperEmail = 'Enter a valid shipper email address.';
+  }
+  if (Number(form.packageCount) <= 0) {
+    errors.packageCount = 'Number of packages must be greater than zero.';
+  }
 
   modeConfig.requiredFields.forEach((field) => {
     if (field in form && !String(form[field as keyof IntakeFormState] ?? '').trim()) {
@@ -1624,6 +1633,16 @@ function validateForm(form: IntakeFormState, mode: IntakeMode): InlineErrors {
   }
   if (form.shipmentMode === 'Road' && Number(form.roadDistanceKm) <= 0) {
     errors.roadDistanceKm = 'Road distance must be greater than zero.';
+  }
+  if (form.cargoReadyDate && Number.isNaN(new Date(form.cargoReadyDate).getTime())) {
+    errors.cargoReadyDate = 'Cargo ready date must be a valid date.';
+  }
+  if (form.preferredDepartureWindow && form.preferredArrivalWindow) {
+    const departure = new Date(form.preferredDepartureWindow).getTime();
+    const arrival = new Date(form.preferredArrivalWindow).getTime();
+    if (!Number.isNaN(departure) && !Number.isNaN(arrival) && arrival < departure) {
+      errors.preferredArrivalWindow = 'Arrival window must be after the departure window.';
+    }
   }
   if (mode === 'booking' && form.documentsCompleteness === 'Missing') {
     errors.documentsCompleteness = 'Booking confirmation requires at least partial documents.';
@@ -1755,7 +1774,7 @@ export function BookingIntakeWorkspace() {
   const bookingParam = searchParams.get('booking') || '';
   const [form, setForm] = useState<IntakeFormState>(defaultForm());
   const [errors, setErrors] = useState<InlineErrors>({});
-  const [notice, setNotice] = useState<{ tone: 'success' | 'info'; text: string } | null>(null);
+  const [notice, setNotice] = useState<{ tone: 'success' | 'info' | 'error'; text: string } | null>(null);
   const [lastRecordId, setLastRecordId] = useState('');
   const [workflowStep, setWorkflowStep] = useState<WorkflowStep>(1);
   const [generatedQuote, setGeneratedQuote] = useState<GeneratedQuoteState | null>(null);
@@ -2794,8 +2813,14 @@ Tikur Abay Team`;
     persistRequest(request);
     try {
       await syncBookingToBackendWorkflow(request);
-    } catch {
-      // Backend shipment sync is best-effort here; local workflow should still continue.
+    } catch (error) {
+      setNotice({
+        tone: 'error',
+        text: error instanceof Error
+          ? `Booking could not be synchronized to the backend. ${error.message}`
+          : 'Booking could not be synchronized to the backend. Please try again.',
+      });
+      return;
     }
     syncBookingToTracking(request);
     let bookingDocumentRegistered = false;

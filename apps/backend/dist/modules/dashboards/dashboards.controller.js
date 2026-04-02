@@ -45,6 +45,9 @@ let DashboardsController = class DashboardsController {
     async executiveWorkspace(tab) {
         return this.dashboardsService.getExecutiveWorkspace(tab);
     }
+    async headOfficeCommandCenter() {
+        return this.dashboardsService.getHeadOfficeCommandCenter();
+    }
     async transportControlTowerSummary() {
         return this.dashboardsService.getTransportControlTowerSummary();
     }
@@ -104,6 +107,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DashboardsController.prototype, "executiveWorkspace", null);
+__decorate([
+    (0, common_1.Get)('management/head-office-command-center'),
+    (0, permissions_decorator_1.Permissions)('dashboards:executive:view'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DashboardsController.prototype, "headOfficeCommandCenter", null);
 __decorate([
     (0, common_1.Get)('transport-control-tower/summary'),
     (0, permissions_decorator_1.Permissions)('dashboards:executive:view'),

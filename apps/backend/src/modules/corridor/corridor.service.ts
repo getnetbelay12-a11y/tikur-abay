@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { createHash } from 'node:crypto';
 import { Types } from 'mongoose';
 import { connectToDatabase } from '../../database/mongo';
@@ -815,14 +815,26 @@ export class CorridorService {
 
   async createQuote(body: Record<string, any>) {
     await connectToDatabase();
+    const customerName = String(body.customerName || '').trim();
+    const routeName = String(body.route || '').trim();
+    const shipmentMode = String(body.containerType || '').trim();
+    if (!customerName) {
+      throw new BadRequestException('Customer name is required before creating a shipment quote.');
+    }
+    if (!routeName) {
+      throw new BadRequestException('Route is required before creating a shipment quote.');
+    }
+    if (!shipmentMode) {
+      throw new BadRequestException('Shipment mode / container type is required before creating a shipment quote.');
+    }
     const pricing = computeQuotePricing(body);
     const quoteCode = `QUO-${String(Date.now()).slice(-8)}`;
     const quote = await QuoteModel.create({
       quoteCode,
-      customerName: body.customerName,
+      customerName,
       customerCode: body.customerCode,
-      routeName: body.route || 'China -> Djibouti -> Ethiopia',
-      shipmentMode: body.containerType || '20ft',
+      routeName,
+      shipmentMode,
       cargoType: body.cargoType,
       estimatedWeightKg: Number(body.weight || 0),
       amount: pricing.total,
@@ -840,6 +852,7 @@ export class CorridorService {
 
   async createBooking(body: Record<string, any>) {
     await connectToDatabase();
+    validateBookingPayload(body);
     const quoteLookup = [] as Record<string, any>[];
     if (body.quoteId) {
       quoteLookup.push({ quoteCode: body.quoteId });
@@ -986,6 +999,7 @@ export class CorridorService {
       bookingCode,
       shipmentId: shipmentRef,
       shipmentRef,
+      duplicateShipmentPrevented: Boolean(existingBooking),
     };
   }
 
@@ -1756,7 +1770,7 @@ export class CorridorService {
     const tripId = String(body.tripId || '').trim();
     const customerName = String(body.customerName || '').trim();
     if (!bookingNumber || !tripId || !customerName) {
-      throw new NotFoundException('bookingNumber, tripId, and customerName are required');
+      throw new BadRequestException('bookingNumber, tripId, and customerName are required.');
     }
 
     const requestedShipmentId = String(body.shipmentId || body.shipmentRef || bookingNumber).trim();
@@ -1776,6 +1790,18 @@ export class CorridorService {
     const origin = String(body.origin || 'Djibouti Port Gate').trim();
     const requestedDriverName = String(body.driverName || '').trim();
     const requestedDriverPhone = String(body.driverPhone || '').trim();
+    const requestedTruckPlate = String(body.truckPlate || '').trim();
+    const requestedTrailerPlate = String(body.trailerPlate || '').trim();
+    const assignmentValidation = validateDispatchAssignmentPayload({
+      tripId,
+      driverName: requestedDriverName,
+      driverPhone: requestedDriverPhone,
+      truckPlate: requestedTruckPlate,
+      trailerPlate: requestedTrailerPlate,
+    });
+    if (assignmentValidation) {
+      throw new BadRequestException(assignmentValidation);
+    }
     const hasAssignedDriver = Boolean(requestedDriverName && requestedDriverPhone);
     const driverName = requestedDriverName;
     const driverPhone = requestedDriverPhone;
@@ -1790,6 +1816,18 @@ export class CorridorService {
     const eta = body.eta || body.expectedArrivalTime ? new Date(body.eta || body.expectedArrivalTime) : undefined;
     const tripStatus = String(body.tripStatus || 'assigned').trim();
     const dispatchStatus = String(body.dispatchStatus || 'assigned').trim();
+    const conflictingTrip = await findConflictingDispatchAssignment({
+      tripId,
+      truckPlate: requestedTruckPlate,
+      driverName: requestedDriverName,
+      driverPhone: requestedDriverPhone,
+    });
+    if (conflictingTrip?.truckPlate === requestedTruckPlate && requestedTruckPlate) {
+      throw new BadRequestException(`Truck ${requestedTruckPlate} is already assigned to active trip ${conflictingTrip.tripId}.`);
+    }
+    if (requestedDriverName && (conflictingTrip?.driverName === requestedDriverName || conflictingTrip?.driverPhone === requestedDriverPhone)) {
+      throw new BadRequestException(`Driver ${requestedDriverName} is already assigned to active trip ${conflictingTrip.tripId}.`);
+    }
 
     await CorridorShipmentModel.findOneAndUpdate(
       existingShipment?._id ? { _id: existingShipment._id } : { shipmentId },
@@ -1899,8 +1937,8 @@ export class CorridorService {
       containerNumber,
       tripId,
       driverType,
-      truckPlate: String(body.truckPlate || ''),
-      trailerPlate: String(body.trailerPlate || ''),
+      truckPlate: requestedTruckPlate,
+      trailerPlate: requestedTrailerPlate,
       routeName: tripRoute,
       route: tripRoute,
       originPoint: origin,
@@ -3174,6 +3212,76 @@ function computeQuotePricing(body: Record<string, any>) {
     serviceFee,
     total: transportPrice + clearanceEstimate + serviceFee,
   };
+}
+
+function normalizeComparableText(value: unknown) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function validateBookingPayload(body: Record<string, any>) {
+  const customerName = String(body.customerName || '').trim();
+  const route = String(body.route || '').trim();
+  const shipmentRef = String(body.shipmentRef || body.shipmentId || '').trim();
+  const bookingCode = String(body.bookingCode || body.bookingId || '').trim();
+  const cargoDescription = String(body.cargoDescription || body.commoditySummary || '').trim();
+  if (!customerName) {
+    throw new BadRequestException('Customer name is required before creating a shipment.');
+  }
+  if (!route) {
+    throw new BadRequestException('Route is required before creating a shipment.');
+  }
+  if (!shipmentRef) {
+    throw new BadRequestException('Shipment reference is required before creating a shipment.');
+  }
+  if (!bookingCode) {
+    throw new BadRequestException('Booking reference is required before creating a shipment.');
+  }
+  if (!cargoDescription) {
+    throw new BadRequestException('Cargo description is required before creating a shipment.');
+  }
+}
+
+function validateDispatchAssignmentPayload(input: {
+  tripId: string;
+  driverName: string;
+  driverPhone: string;
+  truckPlate: string;
+  trailerPlate: string;
+}) {
+  if (!input.truckPlate && (input.driverName || input.driverPhone || input.trailerPlate)) {
+    return 'Assign a truck before saving driver or trailer details.';
+  }
+  if (input.driverName && !input.driverPhone) {
+    return 'Driver phone number is required when a driver is assigned.';
+  }
+  if (input.driverPhone && !input.driverName) {
+    return 'Driver name is required when a driver phone number is provided.';
+  }
+  if (input.driverPhone && !/^\+?[0-9]{9,15}$/.test(input.driverPhone.replace(/\s+/g, ''))) {
+    return 'Driver phone number must be a valid international phone number.';
+  }
+  if (input.truckPlate && input.trailerPlate && normalizeComparableText(input.truckPlate) === normalizeComparableText(input.trailerPlate)) {
+    return 'Truck and trailer cannot use the same plate number.';
+  }
+  return '';
+}
+
+async function findConflictingDispatchAssignment(input: {
+  tripId: string;
+  truckPlate: string;
+  driverName: string;
+  driverPhone: string;
+}) {
+  if (!input.truckPlate && !input.driverName && !input.driverPhone) return null;
+  return CorridorTripAssignmentModel.findOne({
+    tripId: { $ne: input.tripId },
+    dispatchStatus: { $nin: ['completed', 'cancelled', 'empty_returned'] },
+    $or: [
+      ...(input.truckPlate ? [{ truckPlate: input.truckPlate }] : []),
+      ...(input.driverName ? [{ driverName: input.driverName }] : []),
+      ...(input.driverPhone ? [{ driverPhone: input.driverPhone }] : []),
+    ],
+  }).lean();
 }
 
 function normalizeContainerPatch(body: Record<string, any>) {

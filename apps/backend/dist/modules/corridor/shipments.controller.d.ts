@@ -261,6 +261,7 @@ export declare class ShipmentsController {
         bookingCode: string;
         shipmentId: string;
         shipmentRef: string;
+        duplicateShipmentPrevented: boolean;
     }>;
     verifyDocument(body: Record<string, unknown>): Promise<{
         valid: boolean;

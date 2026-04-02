@@ -79,6 +79,8 @@ type DispatchLivePoint = {
   speed?: number;
 };
 
+type AssignmentErrors = Partial<Record<'truckPlate' | 'trailerPlate' | 'driverName' | 'driverPhone', string>>;
+
 function formatDate(value: string) {
   if (!value || value === 'Not started') return value || 'Pending';
   const parsed = new Date(value);
@@ -364,6 +366,14 @@ function getTripNextActionLabel(trip: DispatchTripRecord) {
   return 'Monitor movement';
 }
 
+function isActiveTrip(trip: DispatchTripRecord) {
+  return !['Empty returned'].includes(trip.currentTripStatus);
+}
+
+function normalizePhone(value: string) {
+  return value.replace(/\s+/g, '');
+}
+
 function nextStepClass(isActive: boolean) {
   return isActive ? 'supplier-next-step-button' : '';
 }
@@ -443,7 +453,7 @@ function normalizeBackendTripStatus(status: DispatchTripStatus) {
 }
 
 async function syncManualTripToBackend(trip: DispatchTripRecord) {
-  if (!shouldSyncTripToBackend(trip)) return;
+  if (!shouldSyncTripToBackend(trip)) return { ok: true as const };
   try {
     const driverPhone =
       trip.driverStatus.startsWith('Driver assigned · ')
@@ -488,8 +498,12 @@ async function syncManualTripToBackend(trip: DispatchTripRecord) {
       tripStatus: normalizeBackendTripStatus(trip.currentTripStatus),
       dispatchStatus: normalizeBackendTripStatus(trip.currentTripStatus),
     });
+    return { ok: true as const };
   } catch (error) {
-    console.error('Failed to sync manual dispatch trip to backend', error);
+    return {
+      ok: false as const,
+      message: error instanceof Error ? error.message : 'Failed to synchronize the dispatch trip with the backend.',
+    };
   }
 }
 
@@ -638,6 +652,8 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
     driverName: '',
     driverPhone: '',
   });
+  const [assignmentErrors, setAssignmentErrors] = useState<AssignmentErrors>({});
+  const [operationNotice, setOperationNotice] = useState<{ tone: 'success' | 'error' | 'info'; text: string } | null>(null);
   const [liveFleetPoints, setLiveFleetPoints] = useState<DispatchLivePoint[]>([]);
   const skipNextManualDispatchSyncRef = useRef(false);
   const lastTripSignatureRef = useRef('');
@@ -837,6 +853,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
   useEffect(() => {
     if (!selectedTrip) return;
     const preset = assignmentPresetByTruck[selectedTrip.assignedTruck];
+    setAssignmentErrors({});
     setAssignmentDraft({
       truckPlate: selectedTrip.assignedTruck === 'Not assigned' ? '' : selectedTrip.assignedTruck,
       trailerPlate: selectedTrip.assignedTrailer === 'Pending trailer' ? preset?.trailerPlate || '' : selectedTrip.assignedTrailer,
@@ -870,6 +887,55 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
     [trips],
   );
 
+  function validateTruckAssignment() {
+    if (!selectedTrip) return { ok: false as const, errors: { truckPlate: 'Select a trip first.' } };
+    const nextErrors: AssignmentErrors = {};
+    const truckPlate = assignmentDraft.truckPlate.trim();
+    const trailerPlate = assignmentDraft.trailerPlate.trim();
+    if (!truckPlate) {
+      nextErrors.truckPlate = 'Truck plate is required.';
+    }
+    if (!trailerPlate) {
+      nextErrors.trailerPlate = 'Trailer plate is required.';
+    }
+    if (truckPlate && trailerPlate && truckPlate.toLowerCase() === trailerPlate.toLowerCase()) {
+      nextErrors.trailerPlate = 'Trailer plate must differ from the truck plate.';
+    }
+    const conflictingTrip = trips.find((trip) => trip.id !== selectedTrip.id && isActiveTrip(trip) && trip.assignedTruck === truckPlate);
+    if (truckPlate && conflictingTrip) {
+      nextErrors.truckPlate = `${truckPlate} is already assigned to ${conflictingTrip.tripId}.`;
+    }
+    return { ok: Object.keys(nextErrors).length === 0, errors: nextErrors };
+  }
+
+  function validateDriverAssignment() {
+    if (!selectedTrip) return { ok: false as const, errors: { driverName: 'Select a trip first.' } };
+    const nextErrors: AssignmentErrors = {};
+    const truckPlate = assignmentDraft.truckPlate.trim() || (selectedTrip.assignedTruck === 'Not assigned' ? '' : selectedTrip.assignedTruck);
+    const driverName = assignmentDraft.driverName.trim();
+    const driverPhone = normalizePhone(assignmentDraft.driverPhone.trim());
+    if (!truckPlate) {
+      nextErrors.truckPlate = 'Assign a truck before assigning a driver.';
+    }
+    if (!driverName) {
+      nextErrors.driverName = 'Driver name is required.';
+    }
+    if (!driverPhone) {
+      nextErrors.driverPhone = 'Driver phone number is required.';
+    } else if (!/^\+?[0-9]{9,15}$/.test(driverPhone)) {
+      nextErrors.driverPhone = 'Enter a valid driver phone number.';
+    }
+    const conflictingTrip = trips.find((trip) =>
+      trip.id !== selectedTrip.id &&
+      isActiveTrip(trip) &&
+      ((driverName && trip.assignedDriver === driverName) || (driverPhone && trip.driverStatus.includes(driverPhone))),
+    );
+    if (conflictingTrip && driverName) {
+      nextErrors.driverName = `${driverName} is already assigned to ${conflictingTrip.tripId}.`;
+    }
+    return { ok: Object.keys(nextErrors).length === 0, errors: nextErrors, normalizedPhone: driverPhone };
+  }
+
   function updateSelected(
     mutator: (trip: DispatchTripRecord) => DispatchTripRecord,
     afterUpdate?: (trip: DispatchTripRecord) => void,
@@ -880,13 +946,24 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
     skipNextManualDispatchSyncRef.current = true;
     upsertManualDispatchTrip(next);
     if (shouldSyncTripToBackend(next)) {
-      void syncManualTripToBackend(next);
+      void syncManualTripToBackend(next).then((result) => {
+        if (!result?.ok) {
+          setOperationNotice({ tone: 'error', text: result.message || 'Dispatch changes could not be synchronized to the backend.' });
+        }
+      });
     }
     afterUpdate?.(next);
   }
 
   function assignTruck() {
     if (!selectedTrip) return;
+    const validation = validateTruckAssignment();
+    setAssignmentErrors(validation.errors);
+    if (!validation.ok) {
+      setOperationNotice({ tone: 'error', text: Object.values(validation.errors)[0] || 'Resolve the truck assignment errors first.' });
+      return;
+    }
+    setOperationNotice(null);
     const nextTruck = assignmentDraft.truckPlate.trim() || truckOptions.find((truck) => truck !== selectedTrip.assignedTruck) || truckOptions[0];
     const preset = assignmentPresetByTruck[nextTruck];
     const nextTrailer = assignmentDraft.trailerPlate.trim() || preset?.trailerPlate || selectedTrip.assignedTrailer;
@@ -898,14 +975,22 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       lastUpdated: '2026-03-19T18:52:00Z',
     }), (next) => {
       syncTripToTracking(next, 'TRUCK_ASSIGNED', next.originHandoffPoint, 'Dispatch assigned truck and trailer for inland movement.');
+      setOperationNotice({ tone: 'success', text: `Truck ${next.assignedTruck} assigned to ${next.tripId}.` });
     });
   }
 
   function assignDriver() {
     if (!selectedTrip) return;
+    const validation = validateDriverAssignment();
+    setAssignmentErrors(validation.errors);
+    if (!validation.ok) {
+      setOperationNotice({ tone: 'error', text: Object.values(validation.errors)[0] || 'Resolve the driver assignment errors first.' });
+      return;
+    }
+    setOperationNotice(null);
     const preset = assignmentPresetByTruck[assignmentDraft.truckPlate.trim()];
     const nextDriver = assignmentDraft.driverName.trim() || preset?.driverName || driverOptions.find((driver) => driver !== selectedTrip.assignedDriver) || driverOptions[0];
-    const nextDriverPhone = assignmentDraft.driverPhone.trim() || preset?.driverPhone || driverPhoneByName[nextDriver] || sharedDriverPhone;
+    const nextDriverPhone = validation.normalizedPhone || preset?.driverPhone || driverPhoneByName[nextDriver] || sharedDriverPhone;
     updateSelected((trip) => ({
       ...trip,
       assignedDriver: nextDriver,
@@ -918,7 +1003,9 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
         lastPacketUpdate: '2026-03-19T18:54:00Z',
       },
       lastUpdated: '2026-03-19T18:54:00Z',
-    }));
+    }), (next) => {
+      setOperationNotice({ tone: 'success', text: `Driver ${next.assignedDriver} assigned to ${next.tripId}.` });
+    });
   }
 
   function changeRoute() {
@@ -946,6 +1033,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       lastUpdated: nowIso,
     }), (next) => {
       syncTripToTracking(next, 'LOADED_ON_TRUCK', next.originHandoffPoint, 'Dispatch logged goods loaded and staged for inland departure from Djibouti.');
+      setOperationNotice({ tone: 'success', text: `Goods loading recorded for ${next.tripId}.` });
     });
   }
 
@@ -980,6 +1068,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       lastUpdated: nowIso,
     }), (next) => {
       syncTripToTracking(next, 'OUT_FOR_DELIVERY', next.originHandoffPoint, 'Dispatch confirmed corridor departure from Djibouti handoff point.');
+      setOperationNotice({ tone: 'success', text: `Dispatch completed for ${next.tripId}. Trip is now in transit.` });
     });
   }
 
@@ -1002,7 +1091,9 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       },
       currentTripStatus: trip.currentTripStatus === 'Assigned' ? 'Ready to depart' : trip.currentTripStatus,
       lastUpdated: nowIso,
-    }));
+    }), (next) => {
+      setOperationNotice({ tone: 'success', text: `Transit pack pushed to the driver mobile for ${next.tripId}.` });
+    });
   }
 
   function escalateFirstIssue() {
@@ -1013,7 +1104,9 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
         index === 0 ? { ...issue, title: `${issue.title} · escalated`, actionLabel: 'Supervisor notified' } : issue,
       ),
       lastUpdated: '2026-03-19T19:05:00Z',
-    }));
+    }), (next) => {
+      setOperationNotice({ tone: 'info', text: `Incident escalated for ${next.tripId}.` });
+    });
   }
 
   function pushToYardDesk() {
@@ -1049,6 +1142,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       dispatchNote: `Empty return confirmed by dispatch for ${trip.containerNumber}. Corridor file is fully closed.`,
     }), (next) => {
       syncTripToTracking(next, 'EMPTY_RETURN_CONFIRMED', next.inlandDestination, 'Dispatch acknowledged empty return completion and closed the corridor movement.');
+      setOperationNotice({ tone: 'success', text: `Empty return closure confirmed for ${next.tripId}.` });
     });
   }
 
@@ -1094,6 +1188,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
       lastUpdated: '2026-03-20T05:10:00Z',
     }), (next) => {
       syncTripToTracking(next, 'ARRIVED_INLAND', next.inlandDestination, 'Dispatch confirmed inland arrival at the dry-port destination.');
+      setOperationNotice({ tone: 'success', text: `${next.tripId} marked as arrived inland.` });
     });
   }
 
@@ -1106,7 +1201,9 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
         arrivalNoticeSent: true,
       },
       lastUpdated: '2026-03-20T05:12:00Z',
-    }));
+    }), (next) => {
+      setOperationNotice({ tone: 'success', text: `Arrival notice sent for ${next.tripId}.` });
+    });
   }
 
   function confirmUnloadContact() {
@@ -1118,7 +1215,9 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
         unloadContactConfirmed: true,
       },
       lastUpdated: '2026-03-20T05:13:00Z',
-    }));
+    }), (next) => {
+      setOperationNotice({ tone: 'success', text: `Unload contact confirmed for ${next.tripId}.` });
+    });
   }
 
   if (!selectedTrip) {
@@ -1302,6 +1401,8 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
           </div>
         </section>
 
+        {operationNotice ? <div className={`booking-intake-notice ${operationNotice.tone === 'error' ? 'error' : operationNotice.tone}`}>{operationNotice.text}</div> : null}
+
         <section className="dispatch-workboard">
           <aside className="dispatch-workpane dispatch-workpane-left" data-testid="corridor-dispatch-queue">
             <article className="dispatch-panel dispatch-queue-panel">
@@ -1436,6 +1537,7 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
             emptyReturnConfirmed={emptyReturnConfirmed}
             latestCheckpointSealConfirmed={Boolean(latestCheckpoint?.sealConfirmed)}
             assignmentDraft={assignmentDraft}
+            assignmentErrors={assignmentErrors}
             dispatchAssignmentPresets={dispatchAssignmentPresets}
             driverOptions={driverOptions}
             sharedDriverPin={sharedDriverPin}
@@ -1444,7 +1546,10 @@ export const CorridorDispatchRuntime = memo(function CorridorDispatchRuntime() {
             activeIssueSeverity={primaryIssue.severity}
             arrivalReadinessTitle={tx('Arrival Readiness')}
             onApplyAssignmentPreset={applyAssignmentPreset}
-            onAssignmentDraftChange={(next) => setAssignmentDraft((current) => ({ ...current, ...next }))}
+            onAssignmentDraftChange={(next) => {
+              setAssignmentDraft((current) => ({ ...current, ...next }));
+              setAssignmentErrors((current) => ({ ...current, ...Object.fromEntries(Object.keys(next).map((key) => [key, ''])) }));
+            }}
             onAssignTruck={assignTruck}
             onAssignDriver={assignDriver}
             onMarkGoodsLoaded={markGoodsLoaded}

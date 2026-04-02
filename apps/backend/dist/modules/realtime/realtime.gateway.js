@@ -48,9 +48,7 @@ let RealtimeGateway = RealtimeGateway_1 = class RealtimeGateway {
         }
     }
     handleDisconnect(client) {
-        if (client.data?.user?.id) {
-            this.logger.debug(`Socket disconnected for user ${client.data.user.id}`);
-        }
+        void client;
     }
     joinChatRoom(client, body) {
         if (body?.roomId) {

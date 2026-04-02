@@ -4,9 +4,12 @@ import { connectToDatabase } from '../../database/mongo';
 import {
   AgreementModel,
   ActivityLogModel,
+  AvailabilityReportModel,
+  BranchModel,
   CollectionTaskModel,
   CorridorShipmentModel,
   CustomerModel,
+  DriverModel,
   DriverPerformanceMetricModel,
   DriverExpenseClaimModel,
   DriverReimbursementModel,
@@ -20,6 +23,7 @@ import {
   VehicleModel,
   FuelLogModel,
   IncidentReportModel,
+  LeaveRequestModel,
   LaunchChecklistItemModel,
 } from '../../database/models';
 import { GpsService } from '../gps/gps.service';
@@ -28,8 +32,10 @@ import { AiCommandCenterService } from './ai-command-center.service';
 
 const EXECUTIVE_SUMMARY_TTL_MS = 30_000;
 const EXECUTIVE_WORKSPACE_TTL_MS = 15_000;
+const HEAD_OFFICE_COMMAND_CENTER_TTL_MS = 15_000;
 let executiveSummaryCache: { expiresAt: number; payload: unknown } | null = null;
 let executiveWorkspaceCache: Record<string, { expiresAt: number; payload: unknown }> = {};
+let headOfficeCommandCenterCache: { expiresAt: number; payload: unknown } | null = null;
 
 type ExecutiveWorkspaceTab = 'overview' | 'finance' | 'operations' | 'attention';
 
@@ -474,6 +480,614 @@ export class DashboardsService {
     }));
   }
 
+  async getHeadOfficeCommandCenter() {
+    if (headOfficeCommandCenterCache && headOfficeCommandCenterCache.expiresAt > Date.now()) {
+      return headOfficeCommandCenterCache.payload;
+    }
+
+    await connectToDatabase();
+
+    const now = new Date();
+    const todayStart = startOfLocalDay();
+    const weekStart = new Date(todayStart);
+    weekStart.setDate(weekStart.getDate() - 6);
+    const activeTripStatuses = ['assigned', 'loading', 'loaded', 'in_transit', 'at_checkpoint', 'at_border', 'offloading', 'in_djibouti', 'delayed'];
+    const dispatchPipelineStatuses = ['assigned', 'loading', 'loaded', 'in_transit', 'offloading', 'completed'];
+    const blockedShipmentMatch = {
+      $or: [
+        { readinessStatus: 'blocked' },
+        { 'blockedReasons.0': { $exists: true } },
+        { 'missingDocumentTags.0': { $exists: true } },
+        { financeBlockReason: { $exists: true, $nin: [null, ''] } },
+        { closureBlockedReason: { $exists: true, $nin: [null, ''] } },
+        { riskLevel: { $in: ['high', 'critical'] } },
+      ],
+    };
+
+    const trendStart = new Date(todayStart);
+    trendStart.setDate(trendStart.getDate() - 6);
+    const previousTrendStart = new Date(trendStart);
+    previousTrendStart.setDate(previousTrendStart.getDate() - 7);
+    const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+    const previousMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
+
+    const [
+      totalShipments,
+      activeShipments,
+      delayedShipments,
+      blockedShipments,
+      todaysDispatches,
+      revenueInMotionRows,
+      revenueMonthRows,
+      previousRevenueMonthRows,
+      totalVehicles,
+      availableVehicles,
+      utilizedVehicles,
+      maintenanceVehicles,
+      blockedVehicles,
+      totalDrivers,
+      activeTripsByDriver,
+      unavailableDrivers,
+      leaveDrivers,
+      incidentsToday,
+      onTimeDeliveryRows,
+      driverAttentionRows,
+      attentionTripRows,
+      blockerShipmentRows,
+      dispatchFlowRows,
+      shipmentTrendRows,
+      routePerformanceRows,
+      tripBranchRows,
+      vehicleBranchRows,
+      fleetReadyVehicles,
+      incidentRows,
+      delayedAlertRows,
+      blockerAlertRows,
+      revenueTrendRows,
+      delayTrendRows,
+      incidentTrendRows,
+      branchRows,
+      latestPayments,
+      paidInvoices,
+      maintenanceAttentionRows,
+    ] = await Promise.all([
+      CorridorShipmentModel.countDocuments(),
+      TripModel.countDocuments({ status: { $in: activeTripStatuses } }),
+      TripModel.countDocuments({ status: 'delayed' }),
+      CorridorShipmentModel.countDocuments(blockedShipmentMatch),
+      TripModel.countDocuments({ actualStartAt: { $gte: todayStart } }),
+      TripModel.aggregate([
+        { $match: { status: { $in: activeTripStatuses }, revenueAmount: { $gt: 0 } } },
+        { $group: { _id: null, total: { $sum: '$revenueAmount' } } },
+      ]),
+      PaymentModel.aggregate([
+        { $match: { paymentDate: { $gte: monthStart }, status: 'paid' } },
+        { $group: { _id: null, total: { $sum: '$amount' } } },
+      ]),
+      PaymentModel.aggregate([
+        { $match: { paymentDate: { $gte: previousMonthStart, $lt: monthStart }, status: 'paid' } },
+        { $group: { _id: null, total: { $sum: '$amount' } } },
+      ]),
+      VehicleModel.countDocuments({ currentStatus: { $ne: 'inactive' } }),
+      VehicleModel.countDocuments({ readyForAssignment: true, currentStatus: 'available' }),
+      VehicleModel.countDocuments({ currentStatus: { $in: activeTripStatuses } }),
+      VehicleModel.countDocuments({ currentStatus: { $in: ['under_maintenance', 'breakdown'] } }),
+      VehicleModel.countDocuments({
+        $or: [
+          { currentStatus: 'blocked' },
+          { safetyStatus: 'blocked' },
+          { readyForAssignment: false },
+        ],
+      }),
+      DriverModel.countDocuments({ status: 'active' }),
+      TripModel.distinct('driverId', { status: { $in: activeTripStatuses }, driverId: { $ne: null } }),
+      AvailabilityReportModel.distinct('driverId', {
+        status: { $in: ['unavailable', 'off_duty', 'leave'] },
+        dateFrom: { $lte: now },
+        $or: [{ dateTo: null }, { dateTo: { $gte: todayStart } }],
+      }),
+      LeaveRequestModel.distinct('driverId', {
+        status: { $in: ['approved', 'submitted'] },
+        startDate: { $lte: now },
+        endDate: { $gte: todayStart },
+      }),
+      IncidentReportModel.countDocuments({ createdAt: { $gte: todayStart } }),
+      TripModel.aggregate([
+        { $match: { status: 'completed', actualArrivalAt: { $ne: null }, plannedArrivalAt: { $ne: null } } },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: 1 },
+            onTime: {
+              $sum: {
+                $cond: [{ $lte: ['$actualArrivalAt', '$plannedArrivalAt'] }, 1, 0],
+              },
+            },
+          },
+        },
+      ]),
+      DriverReportModel.find({ status: { $in: ['submitted', 'under_review'] } })
+        .sort({ createdAt: -1 })
+        .limit(8)
+        .select('reportCode tripCode branchName driverName urgency status type createdAt')
+        .lean(),
+      TripModel.find({
+        $or: [
+          { status: 'delayed' },
+          { delayedMinutes: { $gte: 120 } },
+        ],
+      })
+        .sort({ delayedMinutes: -1, updatedAt: -1 })
+        .limit(8)
+        .select('tripCode routeName branchName status delayedMinutes plannedArrivalAt driverName updatedAt')
+        .lean(),
+      CorridorShipmentModel.find(blockedShipmentMatch)
+        .sort({ updatedAt: -1 })
+        .limit(8)
+        .select('shipmentRef corridorRoute inlandDestination latestExceptionSummary financeBlockReason closureBlockedReason blockedReasons missingDocumentTags currentOwnerRole updatedAt riskLevel')
+        .lean(),
+      TripModel.aggregate([
+        { $match: { status: { $in: dispatchPipelineStatuses } } },
+        { $group: { _id: '$status', count: { $sum: 1 } } },
+      ]),
+      TripModel.aggregate([
+        { $match: { actualStartAt: { $gte: trendStart } } },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$actualStartAt' },
+              month: { $month: '$actualStartAt' },
+              day: { $dayOfMonth: '$actualStartAt' },
+            },
+            dispatches: { $sum: 1 },
+            delayed: { $sum: { $cond: [{ $eq: ['$status', 'delayed'] }, 1, 0] } },
+            date: { $min: '$actualStartAt' },
+          },
+        },
+        { $sort: { date: 1 } },
+      ]),
+      TripModel.aggregate([
+        { $match: { routeName: { $nin: [null, ''] } } },
+        {
+          $group: {
+            _id: '$routeName',
+            active: { $sum: { $cond: [{ $in: ['$status', activeTripStatuses] }, 1, 0] } },
+            delayed: { $sum: { $cond: [{ $eq: ['$status', 'delayed'] }, 1, 0] } },
+            revenue: { $sum: { $ifNull: ['$revenueAmount', 0] } },
+            completed: { $sum: { $cond: [{ $eq: ['$status', 'completed'] }, 1, 0] } },
+            onTime: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      { $eq: ['$status', 'completed'] },
+                      { $ne: ['$actualArrivalAt', null] },
+                      { $ne: ['$plannedArrivalAt', null] },
+                      { $lte: ['$actualArrivalAt', '$plannedArrivalAt'] },
+                    ],
+                  },
+                  1,
+                  0,
+                ],
+              },
+            },
+          },
+        },
+        { $sort: { delayed: -1, revenue: -1 } },
+        { $limit: 6 },
+      ]),
+      TripModel.aggregate([
+        { $match: { branchName: { $nin: [null, ''] } } },
+        {
+          $group: {
+            _id: '$branchName',
+            active: { $sum: { $cond: [{ $in: ['$status', activeTripStatuses] }, 1, 0] } },
+            delayed: { $sum: { $cond: [{ $eq: ['$status', 'delayed'] }, 1, 0] } },
+            revenue: { $sum: { $ifNull: ['$revenueAmount', 0] } },
+          },
+        },
+      ]),
+      VehicleModel.aggregate([
+        { $match: { branchName: { $nin: [null, ''] } } },
+        {
+          $group: {
+            _id: '$branchName',
+            fleet: { $sum: 1 },
+            available: { $sum: { $cond: [{ $and: [{ $eq: ['$currentStatus', 'available'] }, { $eq: ['$readyForAssignment', true] }] }, 1, 0] } },
+            blocked: { $sum: { $cond: [{ $or: [{ $eq: ['$currentStatus', 'blocked'] }, { $eq: ['$safetyStatus', 'blocked'] }, { $eq: ['$readyForAssignment', false] }] }, 1, 0] } },
+          },
+        },
+      ]),
+      VehicleModel.find({
+        currentStatus: { $ne: 'inactive' },
+      })
+        .select('vehicleCode branchName currentStatus readyForAssignment safetyStatus')
+        .lean(),
+      IncidentReportModel.find()
+        .sort({ createdAt: -1 })
+        .limit(8)
+        .select('tripId tripCode severity driverName status type createdAt')
+        .lean(),
+      TripModel.find({ status: 'delayed' })
+        .sort({ updatedAt: -1 })
+        .limit(6)
+        .select('tripCode routeName branchName updatedAt status')
+        .lean(),
+      CorridorShipmentModel.find(blockedShipmentMatch)
+        .sort({ updatedAt: -1 })
+        .limit(6)
+        .select('shipmentRef corridorRoute inlandDestination currentOwnerRole updatedAt riskLevel currentStage financeBlockReason closureBlockedReason')
+        .lean(),
+      PaymentModel.aggregate([
+        { $match: { paymentDate: { $gte: weekStart }, status: 'paid' } },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$paymentDate' },
+              month: { $month: '$paymentDate' },
+              day: { $dayOfMonth: '$paymentDate' },
+            },
+            total: { $sum: '$amount' },
+            date: { $min: '$paymentDate' },
+          },
+        },
+        { $sort: { date: 1 } },
+      ]),
+      TripModel.aggregate([
+        { $match: { updatedAt: { $gte: weekStart }, status: 'delayed' } },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$updatedAt' },
+              month: { $month: '$updatedAt' },
+              day: { $dayOfMonth: '$updatedAt' },
+            },
+            total: { $sum: 1 },
+            date: { $min: '$updatedAt' },
+          },
+        },
+        { $sort: { date: 1 } },
+      ]),
+      DriverReportModel.aggregate([
+        { $match: { createdAt: { $gte: weekStart }, status: { $in: ['submitted', 'under_review'] } } },
+        {
+          $group: {
+            _id: {
+              year: { $year: '$createdAt' },
+              month: { $month: '$createdAt' },
+              day: { $dayOfMonth: '$createdAt' },
+            },
+            total: { $sum: 1 },
+            date: { $min: '$createdAt' },
+          },
+        },
+        { $sort: { date: 1 } },
+      ]),
+      BranchModel.find({ status: 'active' }).select('name').sort({ name: 1 }).lean(),
+      PaymentModel.find({ status: 'paid' }).sort({ paymentDate: -1 }).limit(10).select('paymentDate amount routeName').lean(),
+      InvoiceModel.find({ status: 'paid' }).sort({ updatedAt: -1 }).limit(10).select('routeName totalAmount updatedAt').lean(),
+      MaintenancePlanModel.find({ status: { $in: ['active', 'due', 'overdue'] }, $or: [{ overdue: true }, { blockedAssignment: true }] })
+        .sort({ overdue: -1, updatedAt: -1 })
+        .limit(8)
+        .select('vehicleCode serviceItemName overdue blockedAssignment updatedAt')
+        .lean(),
+    ]);
+
+    const revenueInMotion = Number(revenueInMotionRows[0]?.total ?? 0);
+    const revenueMonth = Number(revenueMonthRows[0]?.total ?? 0);
+    const previousRevenueMonth = Number(previousRevenueMonthRows[0]?.total ?? 0);
+    const fleetAvailabilityPct = totalVehicles ? Math.round((availableVehicles / totalVehicles) * 100) : 0;
+    const fleetUtilizationPct = totalVehicles ? Math.round((utilizedVehicles / totalVehicles) * 100) : 0;
+    const readyFleetCount = fleetReadyVehicles.filter((vehicle) => vehicle.readyForAssignment && vehicle.currentStatus === 'available' && vehicle.safetyStatus !== 'blocked').length;
+    const fleetReadinessPct = totalVehicles ? Math.round((readyFleetCount / totalVehicles) * 100) : 0;
+    const driverUnavailableIds = new Set([...unavailableDrivers, ...leaveDrivers].map((id) => String(id)));
+    const activeDriverIds = new Set(activeTripsByDriver.map((id) => String(id)));
+    const driverAttentionCount = driverAttentionRows.filter((item) => ['high', 'critical'].includes(String(item.urgency || '').toLowerCase())).length;
+    const readyDrivers = Math.max(totalDrivers - driverUnavailableIds.size - activeDriverIds.size - driverAttentionCount, 0);
+    const driverReadinessPct = totalDrivers ? Math.round((readyDrivers / totalDrivers) * 100) : 0;
+    const onTimeDeliveryPct = Number(onTimeDeliveryRows[0]?.total ?? 0)
+      ? Math.round((Number(onTimeDeliveryRows[0]?.onTime ?? 0) / Number(onTimeDeliveryRows[0]?.total ?? 1)) * 100)
+      : 0;
+
+    const blockerCards = blockerShipmentRows.slice(0, 6).map((item) => ({
+      id: String(item._id),
+      shipmentId: String(item.shipmentRef),
+      title: String(item.shipmentRef),
+      route: String(item.corridorRoute || item.inlandDestination || 'Corridor'),
+      owner: normalizeLabel(item.currentOwnerRole || 'dispatch'),
+      issue: String(item.latestExceptionSummary || item.financeBlockReason || item.closureBlockedReason || (item.blockedReasons || []).join(', ') || (item.missingDocumentTags || []).join(', ') || 'Execution blocker'),
+      severity: normalizeSeverity(item.riskLevel || 'warning'),
+      href: `/shipments/enterprise?shipmentRef=${encodeURIComponent(String(item.shipmentRef))}`,
+      timestamp: item.updatedAt,
+    }));
+
+    const attentionCards = [
+      ...attentionTripRows.map((item) => ({
+        id: String(item._id),
+        shipmentId: String(item.tripCode),
+        title: String(item.tripCode),
+        route: String(item.routeName || item.branchName || 'Route pending'),
+        owner: String(item.driverName || item.branchName || 'Dispatch'),
+        issue: item.status === 'delayed'
+          ? `Delayed by ${Number(item.delayedMinutes ?? 0)} min`
+          : `Arrival at risk for ${formatDateShort(item.plannedArrivalAt)}`,
+        severity: Number(item.delayedMinutes ?? 0) >= 240 ? 'critical' : 'warning',
+        href: `/trips?trip=${encodeURIComponent(String(item.tripCode))}`,
+        timestamp: item.updatedAt,
+      })),
+      ...maintenanceAttentionRows.map((item) => ({
+        id: String(item._id),
+        shipmentId: String(item.vehicleCode || 'VEHICLE'),
+        title: String(item.vehicleCode || 'Vehicle'),
+        route: 'Fleet readiness',
+        owner: 'Workshop',
+        issue: `${String(item.serviceItemName || 'Maintenance')} ${item.overdue ? 'overdue' : 'blocking assignment'}`,
+        severity: item.overdue ? 'critical' : 'warning',
+        href: '/maintenance-alerts',
+        timestamp: item.updatedAt,
+      })),
+    ]
+      .sort((left, right) => new Date(right.timestamp).getTime() - new Date(left.timestamp).getTime())
+      .slice(0, 8);
+
+    const dispatchFlow = dispatchPipelineStatuses.map((status) => {
+      const count = Number(dispatchFlowRows.find((row) => row._id === status)?.count ?? 0);
+      return {
+        key: status,
+        label: normalizeLabel(status),
+        count,
+        tone: status === 'completed' ? 'good' : status === 'offloading' ? 'info' : status === 'in_transit' ? 'info' : 'warning',
+      };
+    });
+
+    const routePerformance = routePerformanceRows.map((row) => {
+      const completed = Number(row.completed ?? 0);
+      const onTimeRate = completed ? Math.round((Number(row.onTime ?? 0) / completed) * 100) : 0;
+      const pressure = routePressureTone(Number(row.delayed ?? 0), onTimeRate);
+      return {
+        route: String(row._id),
+        active: Number(row.active ?? 0),
+        delayed: Number(row.delayed ?? 0),
+        revenue: Number(row.revenue ?? 0),
+        onTimeRate,
+        pressure,
+        href: `/trips?route=${encodeURIComponent(String(row._id))}`,
+      };
+    }).slice(0, 6);
+
+    const vehicleBranchMap = new Map(vehicleBranchRows.map((row) => [String(row._id), row]));
+    const branchPerformance = (tripBranchRows.length ? tripBranchRows : branchRows.map((branch) => ({ _id: branch.name, active: 0, delayed: 0, revenue: 0 }))).map((row) => {
+      const vehicleRow = vehicleBranchMap.get(String(row._id)) ?? { fleet: 0, available: 0, blocked: 0 };
+      const availability = Number(vehicleRow.fleet ?? 0) ? Math.round((Number(vehicleRow.available ?? 0) / Number(vehicleRow.fleet ?? 1)) * 100) : 0;
+      return {
+        branch: String(row._id),
+        active: Number(row.active ?? 0),
+        delayed: Number(row.delayed ?? 0),
+        blocked: Number(vehicleRow.blocked ?? 0),
+        availability,
+        revenue: Number(row.revenue ?? 0),
+        pressure: branchPressureTone(Number(row.delayed ?? 0), Number(vehicleRow.blocked ?? 0), availability),
+        href: `/operations?branch=${encodeURIComponent(String(row._id))}`,
+      };
+    })
+      .sort((left, right) => pressureWeight(right.pressure) - pressureWeight(left.pressure) || right.delayed - left.delayed || right.revenue - left.revenue)
+      .slice(0, 6);
+
+    const latestIncidentTripIds = incidentRows.map((item) => item.tripId).filter(Boolean);
+    const incidentTrips = latestIncidentTripIds.length
+      ? await TripModel.find({ _id: { $in: latestIncidentTripIds } }).select('_id routeName branchName').lean()
+      : [];
+    const incidentTripMap = new Map(incidentTrips.map((trip) => [String(trip._id), trip]));
+
+    const alertRows = [
+      ...incidentRows.map((item) => {
+        const trip = incidentTripMap.get(String(item.tripId || ''));
+        return {
+          id: `incident-${item._id}`,
+          severity: normalizeSeverity(item.severity || 'warning'),
+          shipmentId: String(item.tripCode || item.vehicleCode || item._id),
+          route: String(trip?.routeName || trip?.branchName || 'Incident route'),
+          reportedTime: item.createdAt,
+          owner: String(item.driverName || 'Safety desk'),
+          status: normalizeLabel(item.status || 'reported'),
+          issue: normalizeLabel(item.type || 'incident'),
+          href: item.tripCode ? `/trips?trip=${encodeURIComponent(String(item.tripCode))}` : '/driver-reports',
+        };
+      }),
+      ...delayedAlertRows.map((item) => ({
+        id: `delay-${item._id}`,
+        severity: 'warning',
+        shipmentId: String(item.tripCode),
+        route: String(item.routeName || item.branchName || 'Route pending'),
+        reportedTime: item.updatedAt,
+        owner: String(item.branchName || 'Dispatch'),
+        status: normalizeLabel(item.status || 'delayed'),
+        issue: 'Delayed shipment',
+        href: `/trips?trip=${encodeURIComponent(String(item.tripCode))}`,
+      })),
+      ...blockerAlertRows.map((item) => ({
+        id: `blocker-${item._id}`,
+        severity: normalizeSeverity(item.riskLevel || 'warning'),
+        shipmentId: String(item.shipmentRef),
+        route: String(item.corridorRoute || item.inlandDestination || 'Corridor'),
+        reportedTime: item.updatedAt,
+        owner: normalizeLabel(item.currentOwnerRole || 'dispatch'),
+        status: normalizeLabel(item.currentStage || 'blocked'),
+        issue: String(item.financeBlockReason || item.closureBlockedReason || 'Compliance / dispatch blocker'),
+        href: `/shipments/enterprise?shipmentRef=${encodeURIComponent(String(item.shipmentRef))}`,
+      })),
+    ]
+      .sort((left, right) => new Date(right.reportedTime).getTime() - new Date(left.reportedTime).getTime())
+      .slice(0, 12);
+
+    const dispatchQueue = attentionTripRows.map((item) => ({
+      id: String(item._id),
+      shipmentId: String(item.tripCode),
+      route: String(item.routeName || item.branchName || 'Route pending'),
+      branch: String(item.branchName || 'Dispatch'),
+      owner: String(item.driverName || item.branchName || 'Dispatch'),
+      status: normalizeLabel(item.status || 'active'),
+      eta: formatDateShort(item.plannedArrivalAt),
+      delayMinutes: Number(item.delayedMinutes ?? 0),
+      href: `/trips?trip=${encodeURIComponent(String(item.tripCode))}`,
+    }));
+
+    const shipmentTrend = buildDailySeriesWithDelayed(trendStart, shipmentTrendRows);
+    const revenueByRoute = routePerformance.map((item) => ({
+      route: item.route,
+      revenue: item.revenue,
+      delayed: item.delayed,
+      onTimeRate: item.onTimeRate,
+      href: item.href,
+    }));
+
+    const branchChart = branchPerformance.map((item) => ({
+      branch: item.branch,
+      delayed: item.delayed,
+      revenue: item.revenue,
+      availability: item.availability,
+      blocked: item.blocked,
+      href: item.href,
+    }));
+
+    const fleetAvailabilityChart = [
+      { label: 'Available', value: availableVehicles, tone: 'good' },
+      { label: 'Utilized', value: utilizedVehicles, tone: 'info' },
+      { label: 'Maintenance', value: maintenanceVehicles, tone: 'warning' },
+      { label: 'Blocked', value: blockedVehicles, tone: 'critical' },
+    ];
+
+    const driverAvailabilityChart = [
+      { label: 'Ready', value: readyDrivers, tone: 'good' },
+      { label: 'On trip', value: activeDriverIds.size, tone: 'info' },
+      { label: 'Unavailable', value: driverUnavailableIds.size, tone: 'warning' },
+      { label: 'Attention', value: driverAttentionCount, tone: 'critical' },
+    ];
+
+    const currentDelayedShare = activeShipments ? Math.round((delayedShipments / activeShipments) * 100) : 0;
+
+    const payload = {
+      generatedAt: now.toISOString(),
+      kpis: [
+        { label: 'Total Shipments', value: totalShipments, tone: 'info', href: '/shipments/enterprise', helper: 'All tracked files across corridor operations', trend: totalShipments - activeShipments },
+        { label: 'Active Shipments', value: activeShipments, tone: 'info', href: '/trips?status=in_transit', helper: `${todaysDispatches} dispatches pushed today`, trend: todaysDispatches },
+        { label: 'Delayed Shipments', value: delayedShipments, tone: delayedShipments > 0 ? 'warning' : 'good', href: '/trips?status=delayed', helper: `${attentionTripRows.length} priority files require recovery`, trend: delayedShipments },
+        { label: 'Revenue (ETB)', value: revenueMonth, tone: revenueMonth > 0 ? 'good' : 'info', href: '/finance', helper: `${latestPayments.length} recent paid movements across active files`, trend: revenueMonth - previousRevenueMonth },
+        { label: 'Fleet Utilization %', value: fleetUtilizationPct, tone: fleetUtilizationPct >= 70 ? 'good' : fleetUtilizationPct >= 50 ? 'warning' : 'critical', href: '/tracking', helper: `${utilizedVehicles}/${totalVehicles} units engaged right now`, trend: utilizedVehicles - availableVehicles },
+        { label: 'On-time Delivery %', value: onTimeDeliveryPct, tone: onTimeDeliveryPct >= 85 ? 'good' : onTimeDeliveryPct >= 70 ? 'warning' : 'critical', href: '/trips', helper: `${100 - onTimeDeliveryPct}% variance against plan`, trend: onTimeDeliveryPct - 85 },
+        { label: 'Incidents Today', value: incidentsToday, tone: incidentsToday > 0 ? 'critical' : 'good', href: '/driver-reports', helper: `${incidentRows.length} latest incident and alert records`, trend: incidentsToday },
+      ],
+      charts: {
+        shipmentTrend: {
+          href: '/operations',
+          points: shipmentTrend,
+        },
+        revenueByRoute: {
+          href: '/dashboards/executive/revenue-by-route',
+          points: revenueByRoute,
+        },
+        delayGauge: {
+          href: '/trips?status=delayed',
+          delayedPercentage: currentDelayedShare,
+          delayedCount: delayedShipments,
+          activeCount: activeShipments,
+        },
+      },
+      performance: {
+        route: {
+          href: '/dashboards/executive/revenue-by-route',
+          items: revenueByRoute,
+        },
+        branch: {
+          href: '/operations',
+          items: branchChart,
+        },
+      },
+      dispatchFleet: {
+        queue: {
+          href: '/operations',
+          rows: dispatchQueue,
+        },
+        fleetAvailability: {
+          href: '/tracking',
+          percent: fleetAvailabilityPct,
+          items: fleetAvailabilityChart,
+        },
+        driverAvailability: {
+          href: '/drivers',
+          percent: driverReadinessPct,
+          items: driverAvailabilityChart,
+        },
+      },
+      alerts: alertRows,
+      spotlight: {
+        attention: {
+          href: '/trips?status=delayed',
+          items: attentionCards,
+        },
+        blockers: {
+          href: '/shipments/enterprise',
+          items: blockerCards,
+        },
+        dispatchFlow: {
+          href: '/operations',
+          items: dispatchFlow,
+        },
+        routePerformance: {
+          href: '/dashboards/executive/revenue-by-route',
+          items: routePerformance,
+        },
+        branchPerformance: {
+          href: '/operations',
+          items: branchPerformance,
+        },
+        fleetReadiness: {
+          href: '/tracking',
+          readinessPct: fleetReadinessPct,
+          stats: [
+            { label: 'Ready now', value: readyFleetCount, tone: 'good' },
+            { label: 'Available', value: availableVehicles, tone: 'info' },
+            { label: 'Under maintenance', value: maintenanceVehicles, tone: maintenanceVehicles > 0 ? 'warning' : 'good' },
+            { label: 'Blocked', value: blockedVehicles, tone: blockedVehicles > 0 ? 'critical' : 'good' },
+          ],
+        },
+        driverReadiness: {
+          href: '/drivers',
+          readinessPct: driverReadinessPct,
+          stats: [
+            { label: 'Ready for dispatch', value: readyDrivers, tone: 'good' },
+            { label: 'On active trips', value: activeDriverIds.size, tone: 'info' },
+            { label: 'Unavailable / leave', value: driverUnavailableIds.size, tone: driverUnavailableIds.size > 0 ? 'warning' : 'good' },
+            { label: 'Attention cases', value: driverAttentionCount, tone: driverAttentionCount > 0 ? 'critical' : 'good' },
+          ],
+        },
+      },
+      executiveTrends: {
+        revenue: {
+          href: '/finance',
+          total: Number(latestPayments.reduce((sum, item) => sum + Number(item.amount ?? 0), 0)),
+          points: buildDailySeries(weekStart, revenueTrendRows),
+        },
+        delay: {
+          href: '/trips?status=delayed',
+          total: delayedShipments,
+          points: buildDailySeries(weekStart, delayTrendRows),
+        },
+        incident: {
+          href: '/driver-reports',
+          total: alertRows.filter((item) => item.issue !== 'Delayed shipment').length,
+          points: buildDailySeries(weekStart, incidentTrendRows),
+        },
+      },
+    };
+
+    headOfficeCommandCenterCache = {
+      expiresAt: Date.now() + HEAD_OFFICE_COMMAND_CENTER_TTL_MS,
+      payload,
+    };
+    return payload;
+  }
+
   async getManagementWidgets() {
     const executiveSummary = await this.getExecutiveSummary();
     return executiveSummary.kpis.map((item) => ({
@@ -701,4 +1315,95 @@ function summarizeDriverPerformance(rows: Array<Record<string, unknown>>) {
     secondary: 'Trip delivery, POD, and incident discipline',
     trend: averageScore - 78,
   };
+}
+
+function startOfLocalDay() {
+  const value = new Date();
+  value.setHours(0, 0, 0, 0);
+  return value;
+}
+
+function normalizeLabel(value: unknown) {
+  return String(value || 'Unknown')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function normalizeSeverity(value: unknown) {
+  const normalized = String(value || '').toLowerCase();
+  if (['critical', 'high', 'severe'].includes(normalized)) return 'critical';
+  if (['warning', 'medium', 'moderate', 'delayed'].includes(normalized)) return 'warning';
+  if (['good', 'normal', 'low', 'stable'].includes(normalized)) return 'good';
+  return 'info';
+}
+
+function routePressureTone(delayed: number, onTimeRate: number) {
+  if (delayed >= 4 || (onTimeRate > 0 && onTimeRate < 70)) return 'critical';
+  if (delayed >= 2 || (onTimeRate > 0 && onTimeRate < 85)) return 'warning';
+  return 'good';
+}
+
+function branchPressureTone(delayed: number, blocked: number, availability: number) {
+  if (blocked >= 3 || delayed >= 3 || availability < 45) return 'critical';
+  if (blocked >= 1 || delayed >= 1 || availability < 65) return 'warning';
+  return 'good';
+}
+
+function pressureWeight(value: string) {
+  if (value === 'critical') return 3;
+  if (value === 'warning') return 2;
+  if (value === 'info') return 1;
+  return 0;
+}
+
+function formatDateShort(value: unknown) {
+  if (!value) return 'today';
+  const date = new Date(String(value));
+  if (Number.isNaN(date.getTime())) return 'today';
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function buildDailySeries(start: Date, rows: Array<Record<string, unknown>>) {
+  const byDay = new Map<string, number>();
+  for (const row of rows) {
+    const date = row.date ? new Date(String(row.date)) : null;
+    if (!date || Number.isNaN(date.getTime())) continue;
+    const key = date.toISOString().slice(0, 10);
+    byDay.set(key, Number(row.total ?? 0));
+  }
+
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    const key = date.toISOString().slice(0, 10);
+    return {
+      label: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      value: byDay.get(key) ?? 0,
+    };
+  });
+}
+
+function buildDailySeriesWithDelayed(start: Date, rows: Array<Record<string, unknown>>) {
+  const byDay = new Map<string, { total: number; delayed: number }>();
+  for (const row of rows) {
+    const date = row.date ? new Date(String(row.date)) : null;
+    if (!date || Number.isNaN(date.getTime())) continue;
+    const key = date.toISOString().slice(0, 10);
+    byDay.set(key, {
+      total: Number(row.dispatches ?? 0),
+      delayed: Number(row.delayed ?? 0),
+    });
+  }
+
+  return Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    const key = date.toISOString().slice(0, 10);
+    const row = byDay.get(key) ?? { total: 0, delayed: 0 };
+    return {
+      label: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      total: row.total,
+      delayed: row.delayed,
+    };
+  });
 }

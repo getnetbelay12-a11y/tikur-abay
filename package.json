@@ -86,6 +86,7 @@
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
-    "pdf-lib": "^1.17.1"
+    "pdf-lib": "^1.17.1",
+    "recharts": "^3.8.1"
   }
 }

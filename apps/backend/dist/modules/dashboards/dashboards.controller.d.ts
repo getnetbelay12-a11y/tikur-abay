@@ -58,6 +58,7 @@ export declare class DashboardsController {
         stats: any;
     }>;
     executiveWorkspace(tab?: string): Promise<unknown>;
+    headOfficeCommandCenter(): Promise<unknown>;
     transportControlTowerSummary(): Promise<{
         total: number;
         active: number;

@@ -21,6 +21,21 @@ import { useConsoleI18n } from '../lib/use-console-i18n';
 import { CommunicationCenterDrawer, type CommunicationDrawerTarget } from './communication-center-drawer';
 import { getPriorityShipmentNow, type ShipmentAttentionItem } from '../lib/shipment-attention';
 import ExecutiveControlTower from './dashboard/ExecutiveControlTower';
+import {
+  AlertTriangleIcon,
+  BuildingIcon,
+  ClockIcon,
+  DollarCircleIcon,
+  GaugeIcon,
+  GlobeIcon,
+  MapPinIcon,
+  ShieldIcon,
+  TruckIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
+  UsersIcon,
+  WrenchIcon,
+} from './console-icons';
 
 const DeferredLiveFleetMap = dynamic(
   () => import('./live-fleet-map').then((module) => module.LiveFleetMap),
@@ -2006,20 +2021,52 @@ const KpiCard = memo(function KpiCard({ language, item, compactMoney = false }: 
       ? formatMoney(language, item.value, compactMoney || item.value >= 1000000)
       : typeof item.value === 'number' && item.label.toLowerCase().includes('collections')
         ? formatMoney(language, item.value, true)
-        : typeof item.value === 'number'
+      : typeof item.value === 'number'
           ? formatNumber(language, item.value)
           : item.value;
+  const Icon = metricIconFor(item.label);
+  const TrendIcon = item.tone === 'critical' || item.tone === 'warning' ? TrendingDownIcon : TrendingUpIcon;
+  const trendLabel = item.tone === 'critical'
+    ? 'Critical'
+    : item.tone === 'warning'
+      ? 'Watch'
+      : item.tone === 'good'
+        ? 'Healthy'
+        : 'Live';
   return (
     <article className={`executive-kpi-card ${toneClass(item.tone)}`}>
       <div className="executive-kpi-top">
         <span>{item.label}</span>
+        <span className={`executive-kpi-icon ${toneClass(item.tone)}`} aria-hidden="true">
+          <Icon size={16} />
+        </span>
       </div>
       <strong>{value}</strong>
+      <div className={`executive-kpi-trend ${toneClass(item.tone)}`}>
+        <TrendIcon size={14} />
+        <span>{trendLabel}</span>
+      </div>
       <p>{item.helper}</p>
       {item.href ? <Link href={item.href}>{copyFor(language).viewDetails}</Link> : null}
     </article>
   );
 });
+
+function metricIconFor(label: string) {
+  const key = label.toLowerCase();
+  if (key.includes('revenue') || key.includes('balance') || key.includes('invoice') || key.includes('finance') || key.includes('collection')) return DollarCircleIcon;
+  if (key.includes('fleet') || key.includes('vehicle') || key.includes('trip') || key.includes('shipment')) return TruckIcon;
+  if (key.includes('driver') || key.includes('employee') || key.includes('customer')) return UsersIcon;
+  if (key.includes('route') || key.includes('djibouti') || key.includes('clearance')) return MapPinIcon;
+  if (key.includes('delivery') || key.includes('delay') || key.includes('attention')) return ClockIcon;
+  if (key.includes('maintenance') || key.includes('blocked')) return WrenchIcon;
+  if (key.includes('risk') || key.includes('incident') || key.includes('report')) return AlertTriangleIcon;
+  if (key.includes('compliance') || key.includes('safe')) return ShieldIcon;
+  if (key.includes('branch')) return BuildingIcon;
+  if (key.includes('utilization') || key.includes('performance')) return GaugeIcon;
+  if (key.includes('corridor') || key.includes('transit')) return GlobeIcon;
+  return TruckIcon;
+}
 
 function InsightList({
   title,

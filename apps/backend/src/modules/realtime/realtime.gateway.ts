@@ -56,9 +56,7 @@ export class RealtimeGateway implements OnGatewayConnection, OnGatewayDisconnect
   }
 
   handleDisconnect(client: Socket) {
-    if (client.data?.user?.id) {
-      this.logger.debug(`Socket disconnected for user ${client.data.user.id}`);
-    }
+    void client;
   }
 
   @SubscribeMessage('chat:join')

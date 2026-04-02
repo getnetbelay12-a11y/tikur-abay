@@ -54,6 +54,12 @@ export class DashboardsController {
     return this.dashboardsService.getExecutiveWorkspace(tab as any);
   }
 
+  @Get('management/head-office-command-center')
+  @Permissions('dashboards:executive:view')
+  async headOfficeCommandCenter() {
+    return this.dashboardsService.getHeadOfficeCommandCenter();
+  }
+
   @Get('transport-control-tower/summary')
   @Permissions('dashboards:executive:view')
   async transportControlTowerSummary() {

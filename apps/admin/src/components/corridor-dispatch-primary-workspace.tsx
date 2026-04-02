@@ -17,6 +17,8 @@ type AssignmentDraft = {
   driverPhone: string;
 };
 
+type AssignmentErrors = Partial<Record<keyof AssignmentDraft, string>>;
+
 type AssignmentPreset = {
   truckPlate: string;
   trailerPlate: string;
@@ -61,6 +63,7 @@ export function CorridorDispatchPrimaryWorkspace({
   emptyReturnConfirmed,
   latestCheckpointSealConfirmed,
   assignmentDraft,
+  assignmentErrors,
   dispatchAssignmentPresets,
   driverOptions,
   sharedDriverPin,
@@ -103,6 +106,7 @@ export function CorridorDispatchPrimaryWorkspace({
   emptyReturnConfirmed: boolean;
   latestCheckpointSealConfirmed: boolean;
   assignmentDraft: AssignmentDraft;
+  assignmentErrors: AssignmentErrors;
   dispatchAssignmentPresets: AssignmentPreset[];
   driverOptions: string[];
   sharedDriverPin: string;
@@ -188,18 +192,22 @@ export function CorridorDispatchPrimaryWorkspace({
                   <option key={preset.truckPlate} value={preset.truckPlate}>{preset.truckPlate} · {preset.driverName}</option>
                 ))}
               </select>
+              {assignmentErrors.truckPlate ? <small className="supplier-form-error">{assignmentErrors.truckPlate}</small> : null}
             </label>
             <label className="supplier-field-block">
               <span>Trailer plate number</span>
               <input className="supplier-desk-input" value={assignmentDraft.trailerPlate} onChange={(event) => onAssignmentDraftChange({ trailerPlate: event.target.value })} placeholder="Enter trailer plate number" />
+              {assignmentErrors.trailerPlate ? <small className="supplier-form-error">{assignmentErrors.trailerPlate}</small> : null}
             </label>
             <label className={`supplier-field-block ${nextActionKey === 'assign-driver' && !assignmentDraft.driverName.trim() ? 'supplier-next-step-field' : ''}`}>
               <span>Driver name</span>
               <input className="supplier-desk-input" value={assignmentDraft.driverName} onChange={(event) => onAssignmentDraftChange({ driverName: event.target.value })} placeholder="Enter driver full name" list="dispatch-driver-options" />
+              {assignmentErrors.driverName ? <small className="supplier-form-error">{assignmentErrors.driverName}</small> : null}
             </label>
             <label className={`supplier-field-block ${nextActionKey === 'assign-driver' && !assignmentDraft.driverPhone.trim() ? 'supplier-next-step-field' : ''}`}>
               <span>Driver phone number</span>
               <input className="supplier-desk-input" value={assignmentDraft.driverPhone} onChange={(event) => onAssignmentDraftChange({ driverPhone: event.target.value })} placeholder="Enter driver phone number" />
+              {assignmentErrors.driverPhone ? <small className="supplier-form-error">{assignmentErrors.driverPhone}</small> : null}
             </label>
             <datalist id="dispatch-driver-options">
               {driverOptions.map((driver) => <option key={driver} value={driver} />)}

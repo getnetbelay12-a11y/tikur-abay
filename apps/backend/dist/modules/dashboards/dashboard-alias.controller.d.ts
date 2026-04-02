@@ -90,6 +90,7 @@ export declare class DashboardAliasController {
         stats: any;
     }>;
     executiveWorkspace(tab?: string): Promise<unknown>;
+    headOfficeCommandCenter(): Promise<unknown>;
     communicationHistory(user: AuthenticatedUser, entityType: string, entityId: string): Promise<{
         entity: {
             entityType: string;

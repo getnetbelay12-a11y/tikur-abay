@@ -38,6 +38,7 @@ export declare class DashboardsService {
     getTransportControlTowerTrend(): Promise<ControlTowerTrendRow[]>;
     getTransportControlTowerPerformance(): Promise<ControlTowerPerformanceRow[]>;
     getTransportControlTowerAlerts(): Promise<ControlTowerAlertRow[]>;
+    getHeadOfficeCommandCenter(): Promise<unknown>;
     getManagementWidgets(): Promise<any>;
     getExecutiveActivityFeed(): Promise<(import("mongoose").FlattenMaps<any> & Required<{
         _id: unknown;

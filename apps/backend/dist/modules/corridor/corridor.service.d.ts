@@ -268,6 +268,7 @@ export declare class CorridorService {
         bookingCode: string;
         shipmentId: string;
         shipmentRef: string;
+        duplicateShipmentPrevented: boolean;
     }>;
     checkClearanceReadiness(actor: CorridorActorContext, shipmentIdOrRef: string, includeAggregate?: boolean): Promise<{
         ready: any;

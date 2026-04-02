@@ -1,6 +1,22 @@
 export const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:6012/api/v1';
 const healthUrl = process.env.NEXT_PUBLIC_API_HEALTH_URL || `${apiBase.replace(/\/api\/v1$/, '')}/api/v1/health`;
 
+async function readErrorMessage(response: Response, fallback: string) {
+  const payload = (await response.json().catch(() => ({}))) as {
+    message?: string | string[];
+    error?: string;
+    details?: string[];
+  };
+  const parts = [
+    ...(Array.isArray(payload.message) ? payload.message : payload.message ? [payload.message] : []),
+    ...(Array.isArray(payload.details) ? payload.details : []),
+    ...(payload.error ? [payload.error] : []),
+  ]
+    .map((item) => String(item || '').trim())
+    .filter(Boolean);
+  return parts[0] || fallback;
+}
+
 function readCookie(name: string) {
   if (typeof document === 'undefined') return null;
   const match = document.cookie
@@ -79,11 +95,20 @@ export async function apiHealth() {
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
-  let response = await fetch(`${apiBase}${path}`, { cache: 'no-store', headers: authHeaders() });
+  let response: Response;
+  try {
+    response = await fetch(`${apiBase}${path}`, { cache: 'no-store', headers: authHeaders() });
+  } catch {
+    throw new Error('The platform could not reach the server. Check your connection and try again.');
+  }
   if (response.status === 401) {
     const refreshed = await tryRefreshToken();
     if (refreshed) {
-      response = await fetch(`${apiBase}${path}`, { cache: 'no-store', headers: authHeaders() });
+      try {
+        response = await fetch(`${apiBase}${path}`, { cache: 'no-store', headers: authHeaders() });
+      } catch {
+        throw new Error('The platform could not reach the server after refreshing your session. Try again.');
+      }
     }
   }
   if (response.status === 401) {
@@ -91,10 +116,10 @@ export async function apiGet<T>(path: string): Promise<T> {
     throw new Error('Your session expired. Please sign in again.');
   }
   if (response.status === 403) {
-    throw new Error('You do not have permission to perform this action.');
+    throw new Error(await readErrorMessage(response, 'You do not have permission to perform this action.'));
   }
   if (!response.ok) {
-    throw new Error(`GET ${path} failed`);
+    throw new Error(await readErrorMessage(response, `Unable to load ${path}.`));
   }
   return response.json() as Promise<T>;
 }
@@ -122,13 +147,11 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
     throw new Error('Your session expired. Please sign in again.');
   }
   if (response.status === 403) {
-    const data = (await response.json().catch(() => ({}))) as { message?: string };
-    throw new Error(data.message || 'You do not have permission to perform this action.');
+    throw new Error(await readErrorMessage(response, 'You do not have permission to perform this action.'));
   }
 
   if (!response.ok) {
-    const data = (await response.json().catch(() => ({}))) as { message?: string };
-    throw new Error(data.message || `POST ${path} failed`);
+    throw new Error(await readErrorMessage(response, `Unable to complete ${path}.`));
   }
 
   return response.json() as Promise<T>;
@@ -157,13 +180,11 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
     throw new Error('Your session expired. Please sign in again.');
   }
   if (response.status === 403) {
-    const data = (await response.json().catch(() => ({}))) as { message?: string };
-    throw new Error(data.message || 'You do not have permission to perform this action.');
+    throw new Error(await readErrorMessage(response, 'You do not have permission to perform this action.'));
   }
 
   if (!response.ok) {
-    const data = (await response.json().catch(() => ({}))) as { message?: string };
-    throw new Error(data.message || `PATCH ${path} failed`);
+    throw new Error(await readErrorMessage(response, `Unable to update ${path}.`));
   }
 
   return response.json() as Promise<T>;

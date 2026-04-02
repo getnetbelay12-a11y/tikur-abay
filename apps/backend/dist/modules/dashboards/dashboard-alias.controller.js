@@ -51,6 +51,9 @@ let DashboardAliasController = class DashboardAliasController {
     async executiveWorkspace(tab) {
         return this.dashboardsService.getExecutiveWorkspace(tab);
     }
+    async headOfficeCommandCenter() {
+        return this.dashboardsService.getHeadOfficeCommandCenter();
+    }
     async communicationHistory(user, entityType, entityId) {
         return this.executiveCommunicationsService.getHistory(entityType, entityId, user);
     }
@@ -123,6 +126,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], DashboardAliasController.prototype, "executiveWorkspace", null);
+__decorate([
+    (0, common_1.Get)('head-office-command-center'),
+    (0, permissions_decorator_1.Permissions)('dashboards:executive:view'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], DashboardAliasController.prototype, "headOfficeCommandCenter", null);
 __decorate([
     (0, common_1.Get)('communications/history'),
     (0, permissions_decorator_1.Permissions)('dashboards:executive:view', 'payments:view', 'trips:view', 'drivers:view', 'maintenance:view'),
