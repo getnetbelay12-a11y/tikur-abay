@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: tikur-abay-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: tikur_abay_transport
+    volumes:
+      - mongo_data:/data/db
+
+  minio:
+    image: minio/minio:latest
+    container_name: tikur-abay-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  backend:
+    build:
+      context: ./apps/backend
+    depends_on:
+      - mongodb
+      - minio
+    ports:
+      - "4001:4000"
+    env_file:
+      - ./apps/backend/.env.example
+
+  admin-web:
+    build:
+      context: ./apps/admin-web
+    depends_on:
+      - backend
+    ports:
+      - "3001:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:4001
+
+volumes:
+  mongo_data:
+  minio_data:
+
